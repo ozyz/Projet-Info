@@ -6,6 +6,7 @@
 #include <iostream>
 #include <map>
 #include "circuit.h"
+
 using namespace std;
 
 class Node : public Circuit{
@@ -19,7 +20,6 @@ private:
 public:
   Node(const string & nom, const string & type);  //Constructor
   ~Node(){;}                                      //Destructor
-
   void computeOutput(); //Calculate the output from the inputs and node type
   void checkDelta(); //Check if the deltas of the inputs = 1
 };
