@@ -5,7 +5,7 @@
 #include <string>
 #include <iostream>
 #include <map>
-#include "circuit.h"
+
 using namespace std;
 
 class Node : public Circuit {
@@ -13,7 +13,7 @@ class Node : public Circuit {
 private:
 
   //Déclaration des variables
-  string name;
+  string m_name;
   string type;
   bool delta;
   bool output;
@@ -23,8 +23,7 @@ private:
 public:
 
   //Constructeur de la classe Node
-  Node(const string & nom) :
-  Circuit(nom){
+  Node(const string & nom):m_name(nom){
     cout << "Constructeur de la classe Node" << endl;
   }
 
