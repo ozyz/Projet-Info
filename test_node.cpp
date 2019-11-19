@@ -6,10 +6,6 @@
 
 using namespace std;
 
-void computeOutput(){
-
-}
-
-void checkInputDelta(){
-
+void main(){
+  
 }
