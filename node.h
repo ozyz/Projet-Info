@@ -8,7 +8,7 @@
 
 using namespace std;
 
-class Node : public Circuit {
+class Node {
 
 private:
 
