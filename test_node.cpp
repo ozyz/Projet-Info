@@ -6,6 +6,11 @@
 
 using namespace std;
 
-void main(){
-  
+int main(){
+  Node A('A', AND2);
+  Node B('B', OR2);
+  Node C('C', OR2);
+  setInput(A, B);
+  setOuput(C);
+  computeOutput();
 }

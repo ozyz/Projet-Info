@@ -21,9 +21,9 @@ public:
   ~Circuit(){;}                                         //Destructor
 
   void parse();          //Parses the dot file and creates the circuit inputs, outputs and gates with the link between them.
-  setInputValues(bool a, bool b); //Sets the values of the circuit inputs
-  checkSumDelta();  //Checks the delta of all the circuit nodes.
-  evaluate();       //Runs the simulation of the circuit for 1 clock tick, based on the inputs, sets the outputs.
+  void setInputValues(bool a, bool b); //Sets the values of the circuit inputs
+  void checkSumDelta();  //Checks the delta of all the circuit nodes.
+  void evaluate();       //Runs the simulation of the circuit for 1 clock tick, based on the inputs, sets the outputs.
 };
 
 #endif
