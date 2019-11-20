@@ -59,5 +59,3 @@ void Node::computeOutput(){
   }
 
 }
-
-void checkInputDelta(){}
