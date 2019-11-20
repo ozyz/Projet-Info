@@ -1,0 +1,5 @@
+digraph G {
+  A[label="AND2", shape="square"]
+  B[label="OR2", shape="square"]
+  A -> B
+}

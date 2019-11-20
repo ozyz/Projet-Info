@@ -3,7 +3,7 @@
 #include "node.h"
 
 int main(int argc, char const *argv[]) {
-  Circuit a("yo", "circuit.dot");
+  Circuit a("yo", "test.dot");
   a.parse();
   return 0;
 }

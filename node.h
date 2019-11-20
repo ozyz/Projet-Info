@@ -23,7 +23,7 @@ private:
 public:
 
   //Constructeur de la classe Node
-  Node(const string & nom):m_name(nom){
+  Node(const string & nom, const string & type):m_name(nom), type(type){
     cout << "Constructeur de la classe Node" << endl;
   }
 

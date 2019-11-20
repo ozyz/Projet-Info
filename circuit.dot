@@ -1,8 +1,4 @@
 ﻿digraph toto {
-rankdir=LR;
-splines=ortho;
-
-
 a[label="AND2"];
 in1[label="INPUT1"];
 in2[label="INPUT2"];
@@ -10,13 +6,6 @@ in3[label="INPUT3"];
 b[label="OR3"];
 d[label="XOR2"];
 c[label="OUTPUT"];
-
-
-//{in1,in2}->a;
-//{a,in2,in3}->{b,c};
-//{in1,b}->d->c;
-
-
 in1->a;
 in2->a;
 a->b;
@@ -25,134 +14,4 @@ in3->b;
 in1->d;
 b->d;
 d->c;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-digraph toto {
-rankdir=LR;
-splines=ortho;
-
-
-d[label="XOR2_d"];
-a[label="AND2_a"];
-
-
-in1[label="INPUT1"];
-in2[label="INPUT2"];
-in3[label="INPUT3"];
-in4[label="INPUT4"];
-in5[label="INPUT5"];
-in6[label="INPUT6"];
-in7[label="INPUT7"];
-in8[label="INPUT8"];
-in9[label="INPUT9"];
-
-
-b[label="OR3_b"];
-c[label="AND2_c"];
-e[label = "XOR3_e"];
-f[label = "NOR3_f"];
-g[label = "AND4_g"];
-h[label = "AND2_h"];
-i[label = "XOR2_i"];
-j[label = "NOT_j"];
-k[label = "XOR2_k"];
-l[label = "AND2_l"];
-m[label = "OR2_m"];
-n[label = "OR2_n"];
-o[label = "AND2_o"];
-
-
-in1 -> a;
-in2 -> a;
-in3 -> e;
-in8 -> o;
-in9 -> o;
-a -> e;
-l -> e;
-o -> l;
-in7 -> g;
-in6 -> g;
-in5 -> g;
-in4 -> g;
-
-
-g -> i;
-in6 -> i;
-
-
-e -> m;
-in3 -> m;
-
-
-m -> k;
-c -> k;
-
-
-in2 -> c;
-j -> c;
-
-
-j -> l;
-
-
-i -> h;
-k -> h;
-
-
-a -> f;
-h-> f;
-in1 -> f;
-
-
-f -> b;
-h -> b;
-k -> b;
-
-
-m -> d;
-k ->d;
-
-
-d -> n;
-b -> n;
-
-
-in9 -> j;
-
-
 }
