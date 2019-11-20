@@ -64,10 +64,7 @@ public:
 
   //Méthodes
   void computeOutput();
-  
-  void checkInputDelta(){
-    this->my_delta = 1;
-  }
+  bool checkInputDelta();
 
 
   //Destructeur de la classe Node

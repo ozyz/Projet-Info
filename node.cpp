@@ -17,7 +17,7 @@ void Node::computeOutput(){
       tab[it->first] = it->second.my_result;
     }
     this->my_result = tab[0] && tab[1];
-    checkInputDelta();
+    this->my_delta = 1;
   }
 
   //Porte OR_2
@@ -27,7 +27,7 @@ void Node::computeOutput(){
       //cout<<"tab[" << it->first <<"]=" << it->second.my_result << endl;
     }
     this->my_result = tab[0] || tab[1];
-    checkInputDelta();
+    this->my_delta = 1;
   }
 
   //Porte NOT
@@ -36,7 +36,7 @@ void Node::computeOutput(){
       tab[it->first] = it->second.my_result;
     }
     this->my_result = !tab[0];
-    checkInputDelta();
+    this->my_delta = 1;
   }
 
   //Porte XOR_2
@@ -45,7 +45,7 @@ void Node::computeOutput(){
       tab[it->first] = it->second.my_result;
     }
     this->my_result = tab[0] ^ tab[1];
-    checkInputDelta();
+    this->my_delta = 1;
   }
 
   //Porte MUX_2
@@ -56,12 +56,31 @@ void Node::computeOutput(){
     }
     if(tab1[0] == 0){
       this->my_result = tab1[1];
-      checkInputDelta();
+      this->my_delta = 1;
     }
     else if(tab1[0] == 1){
       this->my_result = tab1[2];
-      checkInputDelta();
+      this->my_delta = 1;
     }
   }
 
+}
+
+
+bool Node::checkInputDelta(){
+
+  map<int, Node>::iterator it;
+  bool a;
+
+  for(it=my_inputs.begin(); it!=my_inputs.end(); it++){
+    if(it->second.my_delta == 1){
+      cout << "OK pour le Node " << this->my_name << endl;
+      a = 1;
+    }
+    else{
+      cout << "erreur le Node " << this->my_name << " n'a pas effectué correctement le calcul " << endl;
+      return 0;
+    }
+  }
+  return a;
 }
