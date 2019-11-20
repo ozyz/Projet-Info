@@ -11,11 +11,11 @@ using namespace std;
 
 class Circuit{
 private:
-  string m_name;    //Circuit name
-  string m_dotFile; //Dotfile path
-  map<string, Node> m_circuitInputs;  //Map of the circuit inputs
-  map<string, Node> m_circuitOutputs; //Map of the circuit outputs
-  map<string, Node> m_circuitGates;   //Map of the circuit gates
+  string my_name;    //Circuit name
+  string my_dotFile; //Dotfile path
+  map<int, Node> my_circuitInputs;  //Map of the circuit inputs
+  map<int, Node> my_circuitOutputs; //Map of the circuit outputs
+  map<int, Node> my_circuitGates;   //Map of the circuit gates
 public:
   Circuit(const string & nom, const string & dotFile);  //Constructor
   ~Circuit(){;}                                         //Destructor
