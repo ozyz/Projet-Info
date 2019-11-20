@@ -28,9 +28,10 @@ public:
   }
 
   //Modifieurs et accesseurs
-  void setInputs(Node A, Node B){
+  void setInputs(Node A, Node B, Node C){
     my_inputs.insert(pair<int, Node>(0, A));
     my_inputs.insert(pair<int, Node>(1, B));
+    my_inputs.insert(pair<int, Node>(2, C));
   }
 
   void setOutputs(Node C){
