@@ -28,14 +28,11 @@ public:
   }
 
   //Modifieurs et accesseurs
-  void setInputs(Node A, Node B, Node C){
-    my_inputs.insert(pair<int, Node>(0, A));
-    my_inputs.insert(pair<int, Node>(1, B));
-    my_inputs.insert(pair<int, Node>(2, C));
-  }
+
   void addInput(int pos, Node A){
     my_inputs.insert(pair<int, Node>(pos, A));
   }
+
   void setOutputs(Node C){
     my_outputs.insert(pair<int, Node>(0, C));
   }
@@ -46,6 +43,10 @@ public:
 
    string getType(){
     return this->my_type;
+   }
+
+   void setType(string type){
+     this->my_type = type;
    }
 
    void setResult(bool A){

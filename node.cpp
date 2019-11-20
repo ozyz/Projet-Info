@@ -17,26 +17,23 @@ void Node::computeOutput(){
       tab[it->first] = it->second.my_result;
     }
     this->my_result = tab[0] && tab[1];
-    cout << "AND" << endl;
   }
 
   //Porte OR_2
   if(my_type == "OR_2"){
     for(it=my_inputs.begin(); it!=my_inputs.end(); it++){
       tab[it->first] = it->second.my_result;
-      cout<<"tab[" << it->first <<"]=" << it->second.my_result << endl;
+      //cout<<"tab[" << it->first <<"]=" << it->second.my_result << endl;
     }
     this->my_result = tab[0] || tab[1];
-    cout << "OR" << endl;
   }
 
-  //Porte NOT_2
-  if(my_type == "NOT_2"){
+  //Porte NOT
+  if(my_type == "NOT"){
     for(it=my_inputs.begin(); it!=my_inputs.end(); it++){
       tab[it->first] = it->second.my_result;
     }
     this->my_result = !tab[0];
-    cout << "NOT" << endl;
   }
 
   //Porte XOR_2
@@ -45,22 +42,22 @@ void Node::computeOutput(){
       tab[it->first] = it->second.my_result;
     }
     this->my_result = tab[0] ^ tab[1];
-    cout << "XOR" << endl;
   }
 
   //Porte MUX_2
   if(my_type == "MUX_2"){
+    bool tab1[3];
     for(it=my_inputs.begin(); it!=my_inputs.end(); it++){
-      tab[it->first] = it->second.my_result;
+      tab1[it->first] = it->second.my_result;
     }
-    if(tab[0] == 0){
-      this->my_result = tab[1];
+    if(tab1[0] == 0){
+      this->my_result = tab1[1];
     }
-    else if(tab[0] == 1){
-      this->my_result = tab[2];
+    else if(tab1[0] == 1){
+      this->my_result = tab1[2];
     }
-    cout << "MUX" << endl;
   }
 
 }
-//void checkInputDelta(){}
+
+void checkInputDelta(){}
