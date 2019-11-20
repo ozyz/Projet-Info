@@ -13,31 +13,61 @@ class Node {
 private:
 
   //Déclaration des variables
-  string m_name;
-  string type;
-  bool delta;
-  bool output;
-  map<string, Node> inputs;
-  map<string, Node> outputs;
+  string my_name;
+  string my_type;
+  bool my_delta;
+  bool my_result;
+  map<int, Node> my_inputs;
+  map<int, Node> my_outputs;
 
 public:
 
   //Constructeur de la classe Node
+<<<<<<< HEAD
   Node(const string & nom, const string & type):m_name(nom), type(type){
+=======
+  Node(const string & nom, const string & type):my_name(nom), my_type(type){
+>>>>>>> 9b9b75f86099581548b820c7f6944456215ac89c
     cout << "Constructeur de la classe Node" << endl;
   }
 
-  //Destructeur de la classe Node
-  ~Node(){
-    cout << "Destructeur de la classe Node" << endl;
-  };
-
   //Modifieurs et accesseurs
+  void setInputs(Node A, Node B){
+    my_inputs.insert(pair<int, Node>(0, A));
+    my_inputs.insert(pair<int, Node>(1, B));
+  }
+
+  void setOutputs(Node C){
+    my_outputs.insert(pair<int, Node>(0, C));
+  }
+
+   map<int, Node> getInputs(){
+    return this->my_inputs;
+   }
+
+   string getType(){
+    return this->my_type;
+   }
+
+   void setResult(bool A){
+     this->my_result = A;
+   }
+
+
+   bool getResult(){
+     return this->my_result;
+   }
 
 
   //Méthodes
   void computeOutput();
   void checkInputDelta();
+
+
+  //Destructeur de la classe Node
+  //~Node(){
+  //  cout << "Destructeur de la classe Node" << endl;
+  //};
 
 };
 
