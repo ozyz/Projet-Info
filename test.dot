@@ -1,6 +1,16 @@
 digraph G {
-  A[label="AND2", shape="square"]
-  B[label="OR2", shape="square"]
-  A -> B
-  C-> B
+  in1[label="INPUT"]
+  in2[label="INPUT"]
+  out1[label="OUTPUT"]
+  a[label="AND2"]
+  b[label="AND2"]
+  c[label="AND2"]
+
+  in1-> a
+  in2-> a
+  in1-> b
+  b -> c
+  a -> c
+  c -> out1
+
 }

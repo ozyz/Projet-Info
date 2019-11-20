@@ -5,6 +5,8 @@
 #include <iostream>
 #include <fstream>
 #include <algorithm>
+#include <vector>
+#include <bits/stdc++.h>
 
 using namespace std;
 
@@ -14,15 +16,14 @@ Circuit::Circuit(const string & nom, const string & dotFile): my_name(nom), my_d
 
 void Circuit::parse(){
   ifstream fichier(my_dotFile.c_str());
+  vector<Node> vfrom;
+  vector<Node> vto;
+
   string str;
   size_t found;
   int in_circuit_idx = 0;
   int out_circuit_idx = 0;
   int gate_circuit_idx = 0;
-
-  int in_gate_idx = 0;
-  int out_gate_idx = 0;
-  int gate_gate_idx = 0;
 
   while (getline(fichier, str)) {
 
@@ -65,9 +66,27 @@ void Circuit::parse(){
       map<int, Node>::iterator it2;
       for (it1 = my_circuitInputs.begin(); it1 != my_circuitInputs.end(); it1++) {
         if(it1->second.getName() == from_name){
-          for (it2 = my_circuitGates.begin(); it2 != my_circuitInputs.end(); it2++) {
+          for (it2 = my_circuitGates.begin(); it2 != my_circuitGates.end(); it2++) {
+             if(it2->second.getName() == to_name){
+               it2->second.addInput(it1->second);
+             }
+          }
+        }
+      }
+      for (it1 = my_circuitGates.begin(); it1 != my_circuitGates.end(); it1++) {
+        if(it1->second.getName() == from_name){
+          for (it2 = my_circuitGates.begin(); it2 != my_circuitGates.end(); it2++) {
             if(it2->second.getName() == to_name){
-              it2->second.addInput(0,it1->second);
+               it2->second.addInput(it1->second);
+            }
+          }
+        }
+      }
+      for (it1 = my_circuitOutputs.begin(); it1 != my_circuitOutputs.end(); it1++) {
+        if(it1->second.getName() == to_name){
+          for (it2 = my_circuitGates.begin(); it2 != my_circuitGates.end(); it2++) {
+            if(it2->second.getName() == from_name){
+               it1->second.addInput(it2->second);
             }
           }
         }
@@ -77,5 +96,49 @@ void Circuit::parse(){
      }
 
     cout << str <<'\n';
+  }
+
+}
+
+void Circuit::setInputValues(bool tab[]){
+  map<int, Node>::iterator it;
+  for (it= my_circuitInputs.begin(); it != my_circuitInputs.end(); it++){
+    it->second.setResult(tab[it->first]);
+  }
+}
+
+bool Circuit::checkSumDelta(){
+  map<int, Node>::iterator it;
+  for (it= my_circuitInputs.begin(); it != my_circuitInputs.end(); it++){
+    if (it->second.getDelta()==0){
+      return 0;
+    }
+  }
+  for (it= my_circuitGates.begin(); it != my_circuitGates.end(); it++){
+    if (it->second.getDelta()==0){
+      return 0;
+    }
+  }
+  for (it= my_circuitOutputs.begin(); it != my_circuitOutputs.end(); it++){
+    if (it->second.getDelta()==0){
+      return 0;
+    }
+  }
+  return 1;
+}
+
+void Circuit::evaluate(){
+  map<int, Node>::iterator it;
+  while (checkSumDelta() == false){
+    for (it= my_circuitGates.begin(); it != my_circuitGates.end(); it++){
+      if (it->second.checkInputDelta() && it->second.getDelta()==0){
+        it->second.computeOutput();
+      }
+    }
+    for (it= my_circuitOutputs.begin(); it != my_circuitOutputs.end(); it++){
+      if (it->second.checkInputDelta()){
+        it->second.setResult(it->second.getResult());
+      }
+    }
   }
 }

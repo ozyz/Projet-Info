@@ -12,4 +12,4 @@ test2: circuit.o node.o main.o
 	g++ -std=c++11 $(CFLAGS) -c -g $^
 
 clean:
-	rm -f *.o *~ test1
+	rm -f *.o *~ test1 test2

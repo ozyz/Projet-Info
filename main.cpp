@@ -5,5 +5,6 @@
 int main(int argc, char const *argv[]) {
   Circuit a("yo", "test.dot");
   a.parse();
+  a.displayCircuit();
   return 0;
 }
