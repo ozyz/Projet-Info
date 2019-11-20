@@ -27,37 +27,43 @@ public:
     cout << "Constructeur de la classe Node" << endl;
   }
 
-  //Destructeur de la classe Node
-  ~Node(){
-    cout << "Destructeur de la classe Node" << endl;
-  };
-
   //Modifieurs et accesseurs
-  void setInput(Node A, Node B){
+  void setInputs(Node A, Node B){
     my_inputs.insert(pair<int, Node>(0, A));
     my_inputs.insert(pair<int, Node>(1, B));
   }
 
-  void setOutput(Node C){
+  void setOutputs(Node C){
     my_outputs.insert(pair<int, Node>(0, C));
   }
 
    map<int, Node> getInputs(){
-    return my_inputs;
+    return this->my_inputs;
    }
 
    string getType(){
-    return my_type;
+    return this->my_type;
    }
 
    void setResult(bool A){
-     my_result = A;
+     this->my_result = A;
+   }
+
+
+   bool getResult(){
+     return this->my_result;
    }
 
 
   //Méthodes
   void computeOutput();
   void checkInputDelta();
+
+
+  //Destructeur de la classe Node
+  //~Node(){
+  //  cout << "Destructeur de la classe Node" << endl;
+  //};
 
 };
 

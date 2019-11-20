@@ -8,33 +8,26 @@ using namespace std;
 
 void Node::computeOutput(){
 
-map<int, Node>::iterator it;
-bool tab[2];
+  map<int, Node>::iterator it;
+  bool tab[2];
 
-switch(my_type){
-
-  case "AND2":
-    for(it=my_inputs.begin(); it!=my_inputs.end(); it++){
-      tab[it->first] = it->second.my_result;
-
-    }
-    my_result = tab[0] && tab[1];
-    break;
-
-  case "OR2":
+  //Porte AND2
+  if(my_type == "AND2"){
     for(it=my_inputs.begin(); it!=my_inputs.end(); it++){
       tab[it->first] = it->second.my_result;
     }
-    my_result = tab[0] || tab[1];
-    break;
+    this->my_result = tab[0] && tab[1];
+  }
 
-  default:
-    break;
-
+  //Porte OR2
+  if(my_type == "OR2"){
+    for(it=my_inputs.begin(); it!=my_inputs.end(); it++){
+      tab[it->first] = it->second.my_result;
+      cout<<"tab[" << it->first <<"]=" << it->second.my_result << endl;
+      cout << "OR" << endl;
+    }
+    this->my_result = tab[0] || tab[1];
   }
 
 }
-
-void checkInputDelta(){
-
-}
+//void checkInputDelta(){}

@@ -1,8 +1,8 @@
 CFLAGS=-g
 
-all : test
+all : test1
 
-test : main.o circuit.o node.o test_node.o
+test1 : circuit.o node.o test_node.o
 		g++ -o test1 $^ $(LDFLAGS)
 
 %.o:%.cc
