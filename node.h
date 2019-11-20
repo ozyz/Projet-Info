@@ -1,7 +1,6 @@
 #ifndef DEF_NODE
 #define DEF_NODE
 
-
 #include <string>
 #include <iostream>
 #include <map>
@@ -30,19 +29,9 @@ public:
   }
 
   //Modifieurs et accesseurs
-<<<<<<< HEAD
-  void setInputs(Node A, Node B){
-    my_inputs.insert(pair<int, Node>(0, A));
-    my_inputs.insert(pair<int, Node>(1, B));
-  }
-  void addInput(Node A){
-    my_inputs.insert(pair<int, Node>(nb_inputs, A));
-    nb_inputs++;
-=======
 
   void addInput(int pos, Node A){
     my_inputs.insert(pair<int, Node>(pos, A));
->>>>>>> a5bbe4feb96532e89d929193dc95f037e5a67f12
   }
 
   void setOutputs(Node C){

@@ -6,6 +6,7 @@
 
 using namespace std;
 
+//Fonction permettant de réaliser le calcul d'un Node
 void Node::computeOutput(){
 
   map<int, Node>::iterator it;
@@ -66,7 +67,7 @@ void Node::computeOutput(){
 
 }
 
-
+//Fonction permettant de vérifier si le delta du/des Node(s) précédant le Node actuel est égal à 1
 bool Node::checkInputDelta(){
 
   map<int, Node>::iterator it;

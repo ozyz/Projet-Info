@@ -18,8 +18,7 @@ int main(){
   D.setResult(1);
   cout << "A: "<< A.getResult()<< " B: " << B.getResult()<< " C: " << C.getResult() << " D: " << D.getResult() << endl << endl;
 
-  //checkInputDelta
-  if()
+  //
 
   //Test AND_2
   cout << "TEST AND_2" << endl; //le type de C est déjà défini avant au début du main
