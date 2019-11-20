@@ -32,7 +32,9 @@ public:
     my_inputs.insert(pair<int, Node>(0, A));
     my_inputs.insert(pair<int, Node>(1, B));
   }
-
+  void addInput(int pos, Node A){
+    my_inputs.insert(pair<int, Node>(pos, A));
+  }
   void setOutputs(Node C){
     my_outputs.insert(pair<int, Node>(0, C));
   }
@@ -54,6 +56,9 @@ public:
      return this->my_result;
    }
 
+   string getName(){
+     return my_name;
+   }
 
   //Méthodes
   void computeOutput();
