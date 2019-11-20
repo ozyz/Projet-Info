@@ -17,6 +17,7 @@ void Node::computeOutput(){
       tab[it->first] = it->second.my_result;
     }
     this->my_result = tab[0] && tab[1];
+    checkInputDelta();
   }
 
   //Porte OR_2
@@ -26,6 +27,7 @@ void Node::computeOutput(){
       //cout<<"tab[" << it->first <<"]=" << it->second.my_result << endl;
     }
     this->my_result = tab[0] || tab[1];
+    checkInputDelta();
   }
 
   //Porte NOT
@@ -34,6 +36,7 @@ void Node::computeOutput(){
       tab[it->first] = it->second.my_result;
     }
     this->my_result = !tab[0];
+    checkInputDelta();
   }
 
   //Porte XOR_2
@@ -42,6 +45,7 @@ void Node::computeOutput(){
       tab[it->first] = it->second.my_result;
     }
     this->my_result = tab[0] ^ tab[1];
+    checkInputDelta();
   }
 
   //Porte MUX_2
@@ -52,9 +56,11 @@ void Node::computeOutput(){
     }
     if(tab1[0] == 0){
       this->my_result = tab1[1];
+      checkInputDelta();
     }
     else if(tab1[0] == 1){
       this->my_result = tab1[2];
+      checkInputDelta();
     }
   }
 
