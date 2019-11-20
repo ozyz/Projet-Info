@@ -23,11 +23,7 @@ private:
 public:
 
   //Constructeur de la classe Node
-<<<<<<< HEAD
-  Node(const string & nom, const string & type):m_name(nom), type(type){
-=======
   Node(const string & nom, const string & type):my_name(nom), my_type(type){
->>>>>>> 9b9b75f86099581548b820c7f6944456215ac89c
     cout << "Constructeur de la classe Node" << endl;
   }
 
