@@ -13,25 +13,26 @@ class Circuit{
 private:
   string my_name;    //Circuit name
   string my_dotFile; //Dotfile path
-  map<int, Node> my_circuitInputs;  //Map of the circuit inputs
-  map<int, Node> my_circuitOutputs; //Map of the circuit outputs
-  map<int, Node> my_circuitGates;   //Map of the circuit gates
+  map<int, Node*> my_circuitInputs;  //Map of the circuit inputs
+  map<int, Node*> my_circuitOutputs; //Map of the circuit outputs
+  map<int, Node*> my_circuitGates;   //Map of the circuit gates
 public:
   Circuit(const string & nom, const string & dotFile);  //Constructor
-  ~Circuit(){;}                                         //Destructor
+  ~Circuit(){;}
+                                       //Destructor
   void displayCircuit(){
-    map<int, Node>::iterator it;
+    map<int, Node*>::iterator it;
     std::cout << "Ce Circuit a pour nom :" <<my_name <<". Voici ses INPUTS:"<<'\n';
     for (it= my_circuitInputs.begin(); it != my_circuitInputs.end(); it++){
-      it->second.displayNode();
+      it->second->displayNode();
     }
     std::cout << "\nVoici ses GATES:"<<'\n';
     for (it= my_circuitGates.begin(); it != my_circuitGates.end(); it++){
-      it->second.displayNode();
+      it->second->displayNode();
     }
     std::cout << "\nVoici ses OUTPUTS:"<<'\n';
     for (it= my_circuitOutputs.begin(); it != my_circuitOutputs.end(); it++){
-      it->second.displayNode();
+      it->second->displayNode();
     }
   }
   void parse();          //Parses the dot file and creates the circuit inputs, outputs and gates with the link between them.

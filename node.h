@@ -1,7 +1,6 @@
 #ifndef DEF_NODE
 #define DEF_NODE
 
-
 #include <string>
 #include <iostream>
 #include <map>
@@ -18,8 +17,8 @@ private:
   string my_type;
   bool my_delta;
   bool my_result;
-  map<int, Node> my_inputs;
-  map<int, Node> my_outputs;
+  map<int, Node*> my_inputs;
+  map<int, Node*> my_outputs;
 
 public:
 
@@ -31,24 +30,20 @@ public:
 
   //Modifieurs et accesseurs
 <<<<<<< HEAD
-  void setInputs(Node A, Node B){
-    my_inputs.insert(pair<int, Node>(0, A));
-    my_inputs.insert(pair<int, Node>(1, B));
-  }
-  void addInput(Node A){
-    my_inputs.insert(pair<int, Node>(nb_inputs, A));
+  void addInput(Node* A){
+    my_inputs.insert(pair<int, Node*>(nb_inputs, A));
     nb_inputs++;
 =======
 
   void addInput(int pos, Node A){
     my_inputs.insert(pair<int, Node>(pos, A));
->>>>>>> a5bbe4feb96532e89d929193dc95f037e5a67f12
+>>>>>>> 9d359f8151578a9b754d96f324811959dbbe8884
   }
 
-  void setOutputs(Node C){
-    my_outputs.insert(pair<int, Node>(0, C));
+  void setOutputs(Node* C){
+    my_outputs.insert(pair<int, Node*>(0, C));
   }
-   map<int, Node> getInputs(){
+  map<int, Node*> getInputs(){
     return this->my_inputs;
    }
 
@@ -56,8 +51,21 @@ public:
     return this->my_type;
    }
 
+   void setDelta(bool a){
+     my_delta = a;
+   }
+
    void setType(string type){
      this->my_type = type;
+   }
+
+   bool getFirstInputResult(){
+     map<int, Node*>::iterator it;
+     for (it= my_inputs.begin(); it != my_inputs.end(); it++){
+        if(it->first == 0) {
+          return it->second->getResult();
+        }
+     }
    }
 
    void setResult(bool A){
@@ -79,10 +87,12 @@ public:
    }
 
    void displayNode(){
-     map<int, Node>::iterator it;
-     std::cout << "Ce noeud a pour nom :" <<my_name <<", pour type :" << my_type << " et un nombre d'entrées:"<<nb_inputs<< ". Voici ses inputs:"<<'\n';
+     map<int, Node*>::iterator it;
+     std::cout << "Ce noeud a pour nom :" <<my_name << ", pour type :" << my_type << " et un nombre d'entrées:"<<nb_inputs<< ". Voici ses inputs:"<<'\n';
+
      for (it= my_inputs.begin(); it != my_inputs.end(); it++){
-       std::cout << "Noeud n°" << it->first <<" de nom:"<< it->second.getName() << " et de type:" <<it->second.getType()<< '\n';
+       Node* tmp = it->second;
+       std::cout << "Noeud n°" << it->first <<"\n de nom:"<< tmp->getName() << "\n et de type:" <<tmp->getType()<< '\n';
      }
    }
 
