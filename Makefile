@@ -8,6 +8,9 @@ test_node : node.o test_node.o
 test2: circuit.o node.o main.o
 		g++ -o test2 $^ $(LDFLAGS)
 
+test_circuit1: circuit.o node.o test_circuit1.o
+		g++ -o test_circuit1 $^ $(LDFLAGS)
+
 %.o:%.cc
 	g++ -std=c++11 $(CFLAGS) -c -g $^
 
