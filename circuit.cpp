@@ -97,7 +97,6 @@ void Circuit::parse(){
 
     cout << str <<'\n';
   }
-
 }
 
 void Circuit::setInputValues(bool tab[]){
