@@ -30,9 +30,15 @@ public:
 
   //Modifieurs et accesseurs
 <<<<<<< HEAD
+<<<<<<< HEAD
   void addInput(Node* A){
     my_inputs.insert(pair<int, Node*>(nb_inputs, A));
     nb_inputs++;
+=======
+
+  void addInput(int pos, Node A){
+    my_inputs.insert(pair<int, Node>(pos, A));
+>>>>>>> 9d359f8151578a9b754d96f324811959dbbe8884
 =======
 
   void addInput(int pos, Node A){
