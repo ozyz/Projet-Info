@@ -1,0 +1,18 @@
+$date Fri Aug  1 23:46:38 2014 $end
+$version 1.0.0 $end
+$comment
+  Simple VCD test
+$end
+$timescale 1 us $end
+$scope module libsigrok $end
+$var wire 1 ! in1 $end
+$var wire 1 " in2 $end
+$var wire 1 ' in3 $end
+$upscope $end
+$enddefinitions $end
+#0 1! 0" 0'
+#40 0! 1" 0'
+#45 0! 1" 1'
+#50 1! 1" 1'
+#72 1! 1" 1'
+#102

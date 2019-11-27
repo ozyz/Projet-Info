@@ -1,14 +1,18 @@
-CFLAGS=-g
+CFLAGS=-g -std=c++11
+VCD_OBJS=./build/VCDFile.o ./build/VCDParser.o  ./build/VCDValue.o ./build/VCDFileParser.o  build/VCDScanner.o
 
-all : test1
+all : test2
 
 test_node : node.o test_node.o
-		g++ -o test_node $^ $(LDFLAGS)
+	g++ -o test_node $^ $(LDFLAGS)
 
 test2: circuit.o node.o main.o
-		g++ -o test2 $^ $(LDFLAGS)
+	g++ -o test2  $^ $(LDFLAGS) $(VCD_OBJS) 
 
 %.o:%.cc
+	g++ -std=c++11 $(CFLAGS) -c -g $^
+
+%.o:%.cpp
 	g++ -std=c++11 $(CFLAGS) -c -g $^
 
 clean:

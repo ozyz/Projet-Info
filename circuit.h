@@ -36,9 +36,10 @@ public:
     }
   }
   void parse();          //Parses the dot file and creates the circuit inputs, outputs and gates with the link between them.
-  void setInputValues(bool tab[]); //Sets the values of the circuit inputs
+  void setInputValues(map<string, bool> inputs); //Sets the values of the circuit inputs
   bool checkSumDelta();  //Checks the delta of all the circuit nodes.
   void evaluate();       //Runs the simulation of the circuit for 1 clock tick, based on the inputs, sets the outputs.
+  void reset();          //resets the circuit (sets all the nodes deltas to 0)
 };
 
 #endif

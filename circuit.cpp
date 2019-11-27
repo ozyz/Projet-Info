@@ -16,8 +16,6 @@ Circuit::Circuit(const string & nom, const string & dotFile): my_name(nom), my_d
 
 void Circuit::parse(){
   ifstream fichier(my_dotFile.c_str());
-  vector<Node> vfrom;
-  vector<Node> vto;
 
   string str;
   size_t found;
@@ -44,7 +42,7 @@ void Circuit::parse(){
        node_type = node_type.substr(0,found2);
 
        Node* B = new Node(node_name,node_type);
-       std::cout << "Node name:"<< B->getName()<< " Node Type :" << B->getType()<< '\n';
+       std::cout << "Node name:"<< B->getName()<< " Node Type :" << B->getType()<<" Delta :"<<B->getDelta() << " Result :" << B->getResult() << '\n';
        if (node_type == "INPUT") {
          my_circuitInputs.insert(pair<int, Node*>(in_circuit_idx, B));
          in_circuit_idx+=1;
@@ -99,13 +97,35 @@ void Circuit::parse(){
   }
 }
 
-void Circuit::setInputValues(bool tab[]){
+void Circuit::setInputValues(map<string, bool> inputs){
+  map<int, Node*>::iterator it_nodes;
+  map<string, bool>::iterator it_inputs;
+  for (it_inputs= inputs.begin(); it_inputs != inputs.end(); it_inputs++){
+    for (it_nodes= my_circuitInputs.begin(); it_nodes != my_circuitInputs.end(); it_nodes++){
+      if(it_inputs->first == it_nodes->second->getName()){
+        it_nodes->second->setResult(it_inputs->second);
+        std::cout << "Input : " <<   it_nodes->second->getName() << " = " << it_nodes->second->getResult()<<'\n';
+        it_nodes->second->setDelta(1);
+      }
+    }
+    // std::cout <<"resultat: " <<it->second->getResult()<<" name:"<< it->second->getName()<<" delta:"<< it->second->getDelta()<< '\n';
+    cin.ignore();
+  }
+}
+
+void Circuit::reset(){
   map<int, Node*>::iterator it;
   for (it= my_circuitInputs.begin(); it != my_circuitInputs.end(); it++){
-    it->second->setResult(tab[it->first]);
-    it->second->setDelta(1);
-    std::cout <<"resultat: " <<it->second->getResult()<<" name:"<< it->second->getName()<<" delta:"<< it->second->getDelta()<< '\n';
-    cin.ignore();
+    it->second->setDelta(0);
+    it->second->setResult(0);
+  }
+  for (it= my_circuitGates.begin(); it != my_circuitGates.end(); it++){
+    it->second->setDelta(0);
+    it->second->setResult(0);
+  }
+  for (it= my_circuitOutputs.begin(); it != my_circuitOutputs.end(); it++){
+    it->second->setDelta(0);
+    it->second->setResult(0);
   }
 }
 

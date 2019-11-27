@@ -25,6 +25,8 @@ public:
   //Constructeur de la classe Node
   Node(const string & nom, const string & type):my_name(nom), my_type(type){
     cout << "Constructeur de la classe Node" << endl;
+    my_delta = 0;
+    my_result=0;
     nb_inputs=0;
   }
 
@@ -82,7 +84,7 @@ public:
 
    void displayNode(){
      map<int, Node*>::iterator it;
-     std::cout << "Ce noeud a pour nom :" <<my_name << ", pour type :" << my_type << " et un nombre d'entrées:"<<nb_inputs<< ". Voici ses inputs:"<<'\n';
+     std::cout << "Ce noeud a pour nom :" <<my_name << ", pour type :" << my_type << " et un nombre d'entrées:"<<nb_inputs << ".Delta = "<< my_delta <<", result=" <<my_result << ". Voici ses inputs:"<<'\n';
 
      for (it= my_inputs.begin(); it != my_inputs.end(); it++){
        Node* tmp = it->second;
