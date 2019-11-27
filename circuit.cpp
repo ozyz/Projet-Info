@@ -100,6 +100,7 @@ void Circuit::parse(){
 void Circuit::setInputValues(map<string, bool> inputs){
   map<int, Node*>::iterator it_nodes;
   map<string, bool>::iterator it_inputs;
+
   for (it_inputs= inputs.begin(); it_inputs != inputs.end(); it_inputs++){
     for (it_nodes= my_circuitInputs.begin(); it_nodes != my_circuitInputs.end(); it_nodes++){
       if(it_inputs->first == it_nodes->second->getName()){
@@ -109,7 +110,7 @@ void Circuit::setInputValues(map<string, bool> inputs){
       }
     }
     // std::cout <<"resultat: " <<it->second->getResult()<<" name:"<< it->second->getName()<<" delta:"<< it->second->getDelta()<< '\n';
-    cin.ignore();
+    // cin.ignore();
   }
 }
 
@@ -149,12 +150,12 @@ bool Circuit::checkSumDelta(){
   return 1;
 }
 
-void Circuit::evaluate(){
+bool Circuit::evaluate(){
   map<int, Node*>::iterator it;
   while (checkSumDelta() == false){
     for (it= my_circuitGates.begin(); it != my_circuitGates.end(); it++){
       if (it->second->checkInputDelta()){
-        std::cout << "entering compute" << '\n';
+        // std::cout << "entering compute" << '\n';
         it->second->computeOutput();
       }
     }
@@ -166,6 +167,8 @@ void Circuit::evaluate(){
     }
   }
   for (it= my_circuitOutputs.begin(); it != my_circuitOutputs.end(); it++){
-    std::cout << "Resultat:" << it->second->getResult()<< '\n';
+
+    // std::cout << "Resultat:" << it->second->getResult()<< '\n';
+    return it->second->getResult();
   }
 }

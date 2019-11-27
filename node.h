@@ -24,7 +24,7 @@ public:
 
 //Constructeur de la classe Node
   Node(const string & nom, const string & type):my_name(nom), my_type(type){
-    cout << "Constructeur de la classe Node" << endl;
+    // cout << "Constructeur de la classe Node" << endl;
     my_delta = 0;
     my_result=0;
     nb_inputs=0;

@@ -6,6 +6,8 @@
 #include <fstream>
 #include <string>
 #include <algorithm>
+#include <sstream>
+#include <iomanip>
 
 using namespace std;
 
@@ -121,16 +123,23 @@ int main(int argc, char const *argv[]) {
   map<int, map<string, bool>> inputs = vcdParser("in.vcd");
   map<int, map<string, bool>>::iterator it_timings;
   map<string, bool>::iterator it_inputs;
+  ostringstream line_time, line_result;
 
   Circuit a("yo", "test.dot");
   a.parse();
-  a.displayCircuit();
+  // a.displayCircuit();
+  std::cout << "Starting simulation...\n" << '\n';
+  line_time << "\nTime:   ";
+  line_result << "Results:";
 
   for (it_timings = inputs.begin(); it_timings != inputs.end(); it_timings++) {
+      line_time << std::setw(6) << it_timings->first;
       a.setInputValues(it_timings->second);
-      a.evaluate();
+      line_result << std::setw(6) << a.evaluate();
       a.reset();
   }
+  std::cout << line_time.str() << '\n';
+  std::cout << line_result.str() << '\n';
   return 0;
 }
 

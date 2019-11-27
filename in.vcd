@@ -11,7 +11,7 @@ $var wire 1 ' in3 $end
 $upscope $end
 $enddefinitions $end
 #0 1! 0" 0'
-#40 0! 1" 0'
+#40
 #45 0! 1" 1'
 #50 1! 1" 1'
 #72 1! 1" 1'
