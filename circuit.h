@@ -22,15 +22,15 @@ public:
                                        //Destructor
   void displayCircuit(){
     map<int, Node*>::iterator it;
-    std::cout << "Ce Circuit a pour nom :" <<my_name <<". Voici ses INPUTS:"<<'\n';
+    std::cout << "The circuit name is :" <<my_name <<". Its INPUTS are :"<<'\n';
     for (it= my_circuitInputs.begin(); it != my_circuitInputs.end(); it++){
       it->second->displayNode();
     }
-    std::cout << "\nVoici ses GATES:"<<'\n';
+    std::cout << "\nIts GATES are :"<<'\n';
     for (it= my_circuitGates.begin(); it != my_circuitGates.end(); it++){
       it->second->displayNode();
     }
-    std::cout << "\nVoici ses OUTPUTS:"<<'\n';
+    std::cout << "\nIts OUTPUTS are :"<<'\n';
     for (it= my_circuitOutputs.begin(); it != my_circuitOutputs.end(); it++){
       it->second->displayNode();
     }

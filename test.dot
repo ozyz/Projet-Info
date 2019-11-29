@@ -1,10 +1,10 @@
 digraph G {
 
-  in1[label="mfzfjzfzfzo"]
+  in1[label="INPUT"]
   in2[label="INPUT"]
   in3[label="INPUT"]
   out1[label="OUTPUT"]
-  and[label="AND_2"]
+  and[label="kkjkegjkejg"]
   or[label="OR_2"]
 
   in1-> and
