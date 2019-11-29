@@ -6,13 +6,13 @@
 
 using namespace std;
 
-//Fonction permettant de réaliser le calcul d'un Node
+//Function which allows the compute of a node
 void Node::computeOutput(){
 
   map<int, Node*>::iterator it;
   bool tab[2];
 
-  //Porte AND_2
+  //AND_2 Gate
   if(my_type == "AND_2"){
     // std::cout << "Computing AND_2..." << '\n';
     for(it=my_inputs.begin(); it!=my_inputs.end(); it++){
@@ -23,7 +23,7 @@ void Node::computeOutput(){
     // std::cout << "Compute AND_2 ended"<< '\n';
   }
 
-  //Porte OR_2
+  //OR_2 Gate
   if(my_type == "OR_2"){
     // std::cout << "Computing OR_2..." << '\n';
     for(it=my_inputs.begin(); it!=my_inputs.end(); it++){
@@ -34,7 +34,7 @@ void Node::computeOutput(){
     // std::cout << "Compute OR_2 ended"<< '\n';
   }
 
-  //Porte NOT
+  //NOT Gate
   if(my_type == "NOT"){
     // std::cout << "Computing NOT..." << '\n';
     for(it=my_inputs.begin(); it!=my_inputs.end(); it++){
@@ -45,7 +45,7 @@ void Node::computeOutput(){
     // std::cout << "Compute NOT ended"<< '\n';
   }
 
-  //Porte XOR_2
+  //XOR_2 Gate
   if(my_type == "XOR_2"){
     // std::cout << "Computing XOR_2..." << '\n';
     for(it=my_inputs.begin(); it!=my_inputs.end(); it++){
@@ -56,7 +56,7 @@ void Node::computeOutput(){
     // std::cout << "Compute XOR_2 ended"<< '\n';
   }
 
-  //Porte MUX_2
+  //MUX_2 Gate
   if(my_type == "MUX_2"){
     // std::cout << "Computing MUX_2..." << '\n';
     bool tab1[3];
@@ -75,7 +75,7 @@ void Node::computeOutput(){
   }
 
 /*
-  //Bascule D
+  //D gate
   Node<bool> clock; //définition de l'horloge
   Node<bool> signal_input; //définition du signal d'entrée
   Node<bool> signal_output; //définition du signal de sortie
@@ -85,7 +85,8 @@ void Node::computeOutput(){
 
 }
 
-//Fonction permettant de vérifier si le delta du/des Node(s) précédant le Node actuel est égal à 1
+
+//This function can check if the delta relating to one/some Node(s), which are behind the current Node, is equal to 1
 bool Node::checkInputDelta(){
 
   map<int, Node*>::iterator it;

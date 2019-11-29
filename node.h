@@ -11,7 +11,7 @@ class Node {
 
 private:
 
-//Déclaration des variables
+//Declaration of the variables
   int nb_inputs;
   string my_name;
   string my_type;
@@ -22,7 +22,7 @@ private:
 
 public:
 
-//Constructeur de la classe Node
+//Constructor for the Node class
   Node(const string & nom, const string & type):my_name(nom), my_type(type){
     // cout << "Constructeur de la classe Node" << endl;
     my_delta = 0;
@@ -30,40 +30,40 @@ public:
     nb_inputs=0;
   }
 
-//Modifieurs et accesseurs
+//Functions which can modify or access the variables of the class
 
-  //Ajout d'une entrée sur un Node
+  //Add input on a Node
   void addInput(Node* A){
     my_inputs.insert(pair<int, Node*>(nb_inputs, A));
     nb_inputs++;
   }
 
-  //Récupérer les entrées d'un Node
+  //Get the inputs of a Node
   map<int, Node*> getInputs(){
       return this->my_inputs;
      }
 
-  //Editer les sorties d'un Node
+  //Edit the outputs of a Node
   void setOutputs(Node* C){
     my_outputs.insert(pair<int, Node*>(0, C));
   }
 
-  //Récupérer la variable "my_type" d'un Node
+  //Get the variable "my_type" of a Node
    string getType(){
     return this->my_type;
    }
 
-    //Editer la variable "my_type" d'un Node
+    //Edit the variable "my_type" of a Node
     void setType(string type){
         this->my_type = type;
       }
 
-   //Editer la valeur du delta d'un Node
+   //Edit delta value of a Node
    void setDelta(bool a){
      my_delta = a;
    }
 
-   //Récupérer la valeur de la variable "my_result" d'un Node
+   //Get the value of the variable "my_result" of a Node
    bool getFirstInputResult(){
      map<int, Node*>::iterator it;
      for (it= my_inputs.begin(); it != my_inputs.end(); it++){
@@ -73,32 +73,32 @@ public:
      }
    }
 
-   //Editer la variable "my_result" d'un Node
+   //Edit the variable "my_result" of a Node
    void setResult(bool A){
      this->my_result = A;
    }
 
-   //Récupérer la valeur de la variable "my_result"
+   //Get the value of the variable "my_result"
    bool getResult(){
      return this->my_result;
    }
 
-   //Récupérer le nombre d'entrées d'un Node
+   //Get the number of inputs from a Node
    int getNbInputs(){
      return this->nb_inputs;
    }
 
-   //Récupérer la valeur de la variable "my_delta" d'un Node
+   //Get the value of the variable "my_delta" of a Node
    bool getDelta(){
      return my_delta;
    }
 
-   //Récupérer la valeur de la variable "my_name" d'un Node
+   //Get the value of the variable "my_name" of a Node
    string getName(){
      return my_name;
    }
 
-   //Afficher un Node : nom, type, nombre d'entrées, et entrées (nom du noeud, type, ...)
+   //Display a Node : name, type, number of inputs, and inputs (Node name, type, ...)
    void displayNode(){
      map<int, Node*>::iterator it;
      std::cout << "Ce noeud a pour nom :" <<my_name << ", pour type :" << my_type << " et un nombre d'entrées:"<<nb_inputs << ".Delta = "<< my_delta <<", result=" <<my_result << ". Voici ses inputs:"<<'\n';
@@ -110,12 +110,12 @@ public:
    }
 
 
-//Méthodes
+//Methods
   void computeOutput();
   bool checkInputDelta();
 
 
-  //Destructeur de la classe Node (en commentaire, car il perturbe le fonctionnement du programme => supprime directement le node après l'avoir créé)
+  //Destructor of the Node class (not active, because it prevents the function to run => the Node is deleted just after being created)
   //~Node(){
   //  cout << "Destructeur de la classe Node" << endl;
   //};
