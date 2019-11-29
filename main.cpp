@@ -35,7 +35,7 @@ map<int, map<string, bool>> vcdParser(string vcdFile)
     map<string, bool> inputs_map;
     const string ref;
 
-    std::cout << "Parsing " << infile << std::endl;
+    // std::cout << "Parsing " << infile << std::endl;
 
     VCDFileParser parser;
 
@@ -53,39 +53,39 @@ map<int, map<string, bool>> vcdParser(string vcdFile)
         for (VCDScope *scope : *trace->get_scopes())
         {
 
-            std::cout << "Scope: " << scope->name << std::endl;
+            // std::cout << "Scope: " << scope->name << std::endl;
 
             for (VCDSignal *signal : scope->signals)
             {
 
-                std::cout << "\t" << signal->hash << "\t"
-                          << signal->reference;
-
+                // std::cout << "\t" << signal->hash << "\t"
+                          // << signal->reference;
+//
                 if (signal->size > 1)
                 {
-                    std::cout << " [" << signal->size << ":0]";
+                    // std::cout << " [" << signal->size << ":0]";
                 }
 
                 std::cout << std::endl;
             }
           }
-          std::cout << "Looking for signals" <<std::endl;
+          // std::cout << "Looking for signals" <<std::endl;
           auto my_signals =  trace->get_signals();
-          std::cout << "Looking for timestamps" <<std::endl;
+          // std::cout << "Looking for timestamps" <<std::endl;
         auto  my_timestamps = trace->get_timestamps();
          int i=0;
         for (VCDTime instant : *my_timestamps)
           {
             for (VCDSignal *cur_signal : *my_signals)
              {
-                 std::cout << "[" << instant <<"] : " << cur_signal->reference
-                   << " = ";
+                 // std::cout << "[" << instant <<"] : " << cur_signal->reference
+                   // << " = ";
                    // Assumes val is not nullptr!
                    VCDBitVector * vecval;
                    auto val = trace->get_signal_value_at(cur_signal->hash,instant);
                    switch(val -> get_type()) {
                        case (VCD_SCALAR):
-                           std::cout << val -> get_value_bit() ; //VCDValue::VCDBit2Char(val -> get_value_bit());
+                           // std::cout << val -> get_value_bit() ; //VCDValue::VCDBit2Char(val -> get_value_bit());
                            inputs_map.insert(make_pair(cur_signal->reference, val->get_value_bit()));
                            break;
                        case (VCD_VECTOR):
@@ -93,15 +93,15 @@ map<int, map<string, bool>> vcdParser(string vcdFile)
                            for(auto it = vecval -> begin();
                                     it != vecval -> end();
                                     ++it) {
-                               std::cout << VCDBit2Char(*it);
+                               // std::cout << VCDBit2Char(*it);
                            }
                            break;
                        case (VCD_REAL):
-                           std::cout << val -> get_value_real();
+                           // std::cout << val -> get_value_real();
                        default:
                            break;
                    }
-              std::cout <<std::endl;
+              // std::cout <<std::endl;
              }
              timing_inputs_map.insert(make_pair(instant, inputs_map));
              inputs_map.clear();

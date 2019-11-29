@@ -14,7 +14,9 @@ Circuit::Circuit(const string & nom, const string & dotFile): my_name(nom), my_d
 
 }
 
+//Parsing the dotfile of the circuit
 void Circuit::parse(){
+
   ifstream fichier(my_dotFile.c_str());
 
   string str;
@@ -23,26 +25,39 @@ void Circuit::parse(){
   int out_circuit_idx = 0;
   int gate_circuit_idx = 0;
 
+  bool in_from_found = 0;
+  bool gate_from_found = 0;
+
+  bool out_to_found = 0;
+  bool gate_to_found = 0;
+
+
   while (getline(fichier, str)) {
 
     str.erase(remove(str.begin(), str.end(), ' '), str.end());
 
+    //Tests if current line has "digraph" and sets the name of the circuit
     if(str.find("digraph") != string::npos){
         found = str.find("{");
         if(found != string::npos){
            my_name = str.substr(7,found-7);
-           std::cout << "name: "<< my_name << '\n';
-        }
+           // std::cout << "name: "<< my_name << '\n';
+        } else {std::cout << "ERREUR : Accolade manquante sur la première ligne" << '\n';}
     }
+
+    //Tests if current line has "label" and creates de nodes of the circuit
     if (str.find("label") != string::npos) {
        size_t found1 = str.find("label");
-       string node_name = str.substr(0,found1-1);
-       string node_type = str.substr(found1+7);
+       string node_name = str.substr(0,found1-1); //Takes the node name from the line
+       string node_type = str.substr(found1+7);   //Deletes the first part of the line
        size_t found2 = node_type.find("\"");
-       node_type = node_type.substr(0,found2);
+       node_type = node_type.substr(0,found2);    //Takes the node type from the line
 
-       Node* B = new Node(node_name,node_type);
-       std::cout << "Node name:"<< B->getName()<< " Node Type :" << B->getType()<<" Delta :"<<B->getDelta() << " Result :" << B->getResult() << '\n';
+       Node* B = new Node(node_name,node_type);   //Creates a Node with the obtained name and type
+
+       // std::cout << "Node name:"<< B->getName()<< " Node Type :" << B->getType()<<" Delta :"<<B->getDelta() << " Result :" << B->getResult() << '\n';
+
+      //Testing the node type and filling the
        if (node_type == "INPUT") {
          my_circuitInputs.insert(pair<int, Node*>(in_circuit_idx, B));
          in_circuit_idx+=1;
@@ -55,7 +70,18 @@ void Circuit::parse(){
        }
     //   std::cout << str.substr(3,found1) << " and "<< str.substr(found1+7,found2-found1-3 + 7 - 1) << '\n';
      }
+
+     //Tests if current line has "->" and fills the inputs of the nodes
      if (str.find("->") != string::npos) {
+     if(in_circuit_idx == 0 ){
+       std::cout << "Erreur : Aucune entrée n'est définie" << '\n';
+       exit(1);
+     }
+
+     if(out_circuit_idx == 0){
+       std::cout << "Erreur : Aucune sortie n'est définie" << '\n';
+       exit(1);
+     }
       size_t found3 = str.find("->");
       string from_name = str.substr(0,found3);
       string to_name = str.substr(found3+2);
@@ -64,36 +90,55 @@ void Circuit::parse(){
       map<int, Node*>::iterator it2;
       for (it1 = my_circuitInputs.begin(); it1 != my_circuitInputs.end(); it1++) {
         if(it1->second->getName() == from_name){
+          in_from_found = 1;
           for (it2 = my_circuitGates.begin(); it2 != my_circuitGates.end(); it2++) {
              if(it2->second->getName() == to_name){
                it2->second->addInput(it1->second);
+               gate_to_found = 1;
              }
           }
         }
       }
       for (it1 = my_circuitGates.begin(); it1 != my_circuitGates.end(); it1++) {
         if(it1->second->getName() == from_name){
+          gate_from_found = 1;
           for (it2 = my_circuitGates.begin(); it2 != my_circuitGates.end(); it2++) {
             if(it2->second->getName() == to_name){
+              gate_to_found = 1;
                it2->second->addInput(it1->second);
+
             }
           }
         }
       }
       for (it1 = my_circuitOutputs.begin(); it1 != my_circuitOutputs.end(); it1++) {
         if(it1->second->getName() == to_name){
+          out_to_found = 1;
           for (it2 = my_circuitGates.begin(); it2 != my_circuitGates.end(); it2++) {
             if(it2->second->getName() == from_name){
+              gate_from_found = 1;
                it1->second->addInput(it2->second);
             }
           }
         }
       }
-
-       std::cout << from_name << "" << to_name << '\n';
+      if (in_from_found == 0 && gate_from_found == 0) {
+        std::cout << "Erreur sur le nom de la connection de l'entrée :\"" << from_name<<"\"" << '\n';
+        exit(1);
+      } else {
+         in_from_found =0;
+         gate_from_found=0;
+      }
+      if (out_to_found == 0 && gate_to_found == 0){
+        std::cout << "Erreur sur le nom de la connection de la sortie :\"" << to_name<<"\"" <<'\n';
+        exit(1);
+      } else {
+        out_to_found = 0;
+        gate_to_found = 0;
+      }
+       // std::cout << from_name << "" << to_name << '\n';
      }
-
-    cout << str <<'\n';
+    // cout << str <<'\n';
   }
 }
 
@@ -105,7 +150,7 @@ void Circuit::setInputValues(map<string, bool> inputs){
     for (it_nodes= my_circuitInputs.begin(); it_nodes != my_circuitInputs.end(); it_nodes++){
       if(it_inputs->first == it_nodes->second->getName()){
         it_nodes->second->setResult(it_inputs->second);
-        std::cout << "Input : " <<   it_nodes->second->getName() << " = " << it_nodes->second->getResult()<<'\n';
+        // std::cout << "Input : " <<   it_nodes->second->getName() << " = " << it_nodes->second->getResult()<<'\n';
         it_nodes->second->setDelta(1);
       }
     }
