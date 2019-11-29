@@ -12,13 +12,13 @@ class Node {
 private:
 
 //Declaration of the variables
-  int nb_inputs;
-  string my_name;
-  string my_type;
-  bool my_delta;
-  bool my_result;
-  map<int, Node*> my_inputs;
-  map<int, Node*> my_outputs;
+  int nb_inputs; //Number of inputs of a Node
+  string my_name; //Name of the Node
+  string my_type; //Type of the Node : AND, OR, XOR, ...
+  bool my_delta; //Delta of a Node
+  bool my_result; //Result of a Node
+  map<int, Node*> my_inputs; //Map which contains all the inputs of a Node
+  map<int, Node*> my_outputs; //Map which contains all the outputs of a Node
 
 public:
 

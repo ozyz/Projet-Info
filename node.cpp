@@ -74,6 +74,11 @@ void Node::computeOutput(){
     // std::cout << "Compute MUX_2 ended"<< '\n';
   }
 
+  else{
+    cout << "Erreur : le type de la porte " << this->my_type << " n'est pas correctement défini" << endl;
+    exit(1);
+  }
+
 /*
   //D gate
   Node<bool> clock; //définition de l'horloge
