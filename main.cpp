@@ -119,8 +119,9 @@ map<int, map<string, bool>> vcdParser(string vcdFile)
 }
 
 int main(int argc, char const *argv[]) {
-
-  map<int, map<string, bool>> inputs = vcdParser("in.vcd");
+  string dotFile = argv[1];
+  string vcdFile = argv[2];
+  map<int, map<string, bool>> inputs = vcdParser(vcdFile);
   map<int, map<string, bool>>::iterator it_inputs;
   vector<int> timings;
   vector<int>::iterator it_timings;
@@ -131,41 +132,70 @@ int main(int argc, char const *argv[]) {
   vector<string> input_names;
   vector<string> output_names;
   vector<string>::iterator it_v;
+  int idx;
+  int diff =0;
+  ostringstream line_time;
+  line_time <<"Time : ";
 
 
-  Circuit a("yo", "test.dot");
+  Circuit a("yo", dotFile);
+
   a.parse();
   input_names = a.getInputNames();
   output_names = a.getOutputNames();
+  int inputs_length = input_names.size();
+  int outputs_length = input_names.size();
+  ostringstream line_results[outputs_length];
+  ostringstream line_inputs[inputs_length];
 
-  //Remplissage du veccteur de timings
+  for (it_v = input_names.begin(); it_v != input_names.end(); it_v++) {
+      idx= distance(input_names.begin(), it_v);
+      diff = 7- it_v->length();
+      line_inputs[idx] << *it_v <<std::setw(diff) <<":";
+  }
+  for (it_v = output_names.begin(); it_v != output_names.end(); it_v++) {
+      idx= distance(output_names.begin(), it_v);
+      diff = 7- it_v->length();
+      line_results[idx]<<*it_v<<std::setw(diff) <<":";
+  }
+
+  //Remplissage du vecteur de timings
   for (it_inputs = inputs.begin(); it_inputs != inputs.end(); it_inputs++) {
       timings.push_back(it_inputs->first);
+      line_time<< std::setw(6)<<it_inputs->first;
   }
+
   //Evaluation
   for (it_inputs = inputs.begin(); it_inputs != inputs.end(); it_inputs++) {
       a.setInputValues(it_inputs->second);
       results.insert(make_pair(it_inputs->first,a.evaluate()));
       a.reset();
   }
-
   //Result printing
   for (it_timings = timings.begin(); it_timings != timings.end(); it_timings++) {
-      std::cout << "\nTime :" << *it_timings << '\n';
       for(it_inputs = inputs.begin(); it_inputs != inputs.end();it_inputs++){
           if(it_inputs->first == *it_timings){
               for(it_name_value = it_inputs->second.begin(); it_name_value != it_inputs->second.end();it_name_value++){
-                  std::cout << "Value of " << it_name_value->first << ":" << it_name_value->second << '\n';
+                  idx= distance(it_inputs->second.begin(), it_name_value);
+                  line_inputs[idx]<< std::setw(6)<<it_name_value->second;
               }
           }
       }
       for(it_results = results.begin(); it_results != results.end();it_results++){
           if(it_results->first == *it_timings){
               for(it_name_value = it_results->second.begin(); it_name_value != it_results->second.end();it_name_value++){
-                  std::cout << "\nValue of " << it_name_value->first << ":" << it_name_value->second << '\n';
+                  idx= distance(it_results->second.begin(), it_name_value);
+                  line_results[idx]<< std::setw(6)<<it_name_value->second;
               }
           }
       }
+  }
+  cout << line_time.str() << '\n';
+  for (int i = 0; i<inputs_length; i++) {
+      cout <<line_inputs[i].str()<<'\n';
+  }
+  for (int i = 0; i<outputs_length; i++) {
+      cout <<line_results[i].str()<<'\n';
   }
   return 0;
 }
