@@ -7,51 +7,116 @@
 using namespace std;
 
 //Function which allows the compute of a node
+//Max number of inputs : 9 !!
+
 void Node::computeOutput(){
 
   map<int, Node*>::iterator it;
-  bool tab[2];
+  bool tab[2]; // we use this tab just for the MUX
+  size_t found;
+  bool result;
+  int n; // number of inputs of a node
+  std::vector<bool> v; //new version : we use a vector instead of a tab to consider nodes with "infinite" inputs
 
-  //AND_2 Gate
-  if(my_type == "AND_2"){
-    // std::cout << "Computing AND_2..." << '\n';
-    for(it=my_inputs.begin(); it!=my_inputs.end(); it++){
-      tab[it->first] = it->second->my_result;
+  str = this->my_type;
+
+  //AND Gate
+  if(str.find("AND") != string::npos){
+    found = str.find("_");
+    if(found != string::npos){
+       n = str.substr(found,found+1);
     }
-    this->my_result = tab[0] && tab[1];
+    else{
+      std::cout << "Error : number of inputs not defined" << '\n';
+    }
+    // std::cout << "Computing AND..." << '\n';
+    for(it=my_inputs.begin(); it!=my_inputs.end(); it++){
+      v.push_back(it->second->my_result);
+    }
+    for(i=0;i=n;i++){
+      if(i==0){
+        result = v[0];
+      }
+      else{
+        result = v[i] && result;
+      }
+    }
+    this->my_result = result;
     this->my_delta = 1;
-    // std::cout << "Compute AND_2 ended"<< '\n';
+    // std::cout << "Compute AND ended"<< '\n';
   }
 
-  //OR_2 Gate
-  else if(my_type == "OR_2"){
-    // std::cout << "Computing OR_2..." << '\n';
-    for(it=my_inputs.begin(); it!=my_inputs.end(); it++){
-      tab[it->first] = it->second->my_result;
+
+  //OR Gate
+  else if(str.find("OR") != string::npos){
+    found = str.find("_");
+    if(found != string::npos){
+       n = str.substr(found,found+1);
     }
-    this->my_result = tab[0] || tab[1];
+    else{
+      std::cout << "Error : number of inputs not defined" << '\n';
+    }
+    // std::cout << "Computing OR..." << '\n';
+    for(it=my_inputs.begin(); it!=my_inputs.end(); it++){
+      v.push_back(it->second->my_result);
+    }
+    for(i=0;i=n;i++){
+      if(i==0){
+        result = v[0];
+      }
+      else{
+        result = v[i] || result;
+      }
+    }
+    this->my_result = result;
     this->my_delta = 1;
-    // std::cout << "Compute OR_2 ended"<< '\n';
+    // std::cout << "Compute OR ended"<< '\n';
   }
+
 
   //NOT Gate
-  else if(my_type == "NOT"){
+  else if(str.find("NOT") != string::npos){
+    found = str.find("_");
+    if(found != string::npos){
+       n = str.substr(found,found+1);
+    }
+    else{
+      std::cout << "Error : number of inputs not defined" << '\n';
+    }
     // std::cout << "Computing NOT..." << '\n';
     for(it=my_inputs.begin(); it!=my_inputs.end(); it++){
-      tab[it->first] = it->second->my_result;
+      v.push_back(it->second->my_result);
     }
-    this->my_result = !tab[0];
+    for(i=0;i=n;i++){
+      result = !v[i];
+    }
+    this->my_result = result;
     this->my_delta = 1;
     // std::cout << "Compute NOT ended"<< '\n';
   }
 
   //XOR_2 Gate
-  else if(my_type == "XOR_2"){
-    // std::cout << "Computing XOR_2..." << '\n';
-    for(it=my_inputs.begin(); it!=my_inputs.end(); it++){
-      tab[it->first] = it->second->my_result;
+  else if(tr.find("XOR") != string::npos){
+    found = str.find("_");
+    if(found != string::npos){
+       n = str.substr(found,found+1);
     }
-    this->my_result = tab[0] ^ tab[1];
+    else{
+      std::cout << "Error : number of inputs not defined" << '\n';
+    }
+    // std::cout << "Computing XOR..." << '\n';
+    for(it=my_inputs.begin(); it!=my_inputs.end(); it++){
+      v.push_back(it->second->my_result);
+    }
+    for(i=0;i=n;i++){
+      if(i==0){
+        result = v[0];
+      }
+      else{
+        result = v[i] ^ result;
+      }
+    }
+    this->my_result = result;
     this->my_delta = 1;
     // std::cout << "Compute XOR_2 ended"<< '\n';
   }
@@ -75,11 +140,9 @@ void Node::computeOutput(){
   }
 
   else if(my_type == "INPUT"){
-
   }
 
   else if(my_type == "OUTPUT"){
-
   }
 
   else{
