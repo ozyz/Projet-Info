@@ -148,11 +148,13 @@ int main(int argc, char const *argv[]) {
   ostringstream line_results[outputs_length];
   ostringstream line_inputs[inputs_length];
 
+  //Affichage des entrées
   for (it_v = input_names.begin(); it_v != input_names.end(); it_v++) {
       idx= distance(input_names.begin(), it_v);
       diff = 7- it_v->length();
       line_inputs[idx] << *it_v <<std::setw(diff) <<":";
   }
+  //Affichage des sorties
   for (it_v = output_names.begin(); it_v != output_names.end(); it_v++) {
       idx= distance(output_names.begin(), it_v);
       diff = 7- it_v->length();
@@ -171,6 +173,7 @@ int main(int argc, char const *argv[]) {
       results.insert(make_pair(it_inputs->first,a.evaluate()));
       a.reset();
   }
+  
   //Result printing
   for (it_timings = timings.begin(); it_timings != timings.end(); it_timings++) {
       for(it_inputs = inputs.begin(); it_inputs != inputs.end();it_inputs++){

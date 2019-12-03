@@ -48,7 +48,7 @@ void Node::computeOutput(){
   }
 
     //NAND Gate
-    if(str.find("NAND") != string::npos){
+    else if(str.find("NAND") != string::npos){
       found = str.find("_");
       if(found != string::npos){
          n = stoi(str.substr(found+1));
@@ -56,7 +56,7 @@ void Node::computeOutput(){
       else{
         std::cout << "Error NAND: number of inputs not defined" << '\n';
       }
-      // std::cout << "Computing AND..." << '\n';
+      // std::cout << "Computing NAND..." << '\n';
       for(it=my_inputs.begin(); it!=my_inputs.end(); it++){
         v.push_back(it->second->my_result);
       }
@@ -70,7 +70,7 @@ void Node::computeOutput(){
       }
       this->my_result = !result;
       this->my_delta = 1;
-      // std::cout << "Compute AND ended"<< '\n';
+      // std::cout << "Compute NAND ended"<< '\n';
     }
 
 
