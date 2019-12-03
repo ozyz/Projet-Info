@@ -24,7 +24,7 @@ void Node::computeOutput(){
   }
 
   //OR_2 Gate
-  if(my_type == "OR_2"){
+  else if(my_type == "OR_2"){
     // std::cout << "Computing OR_2..." << '\n';
     for(it=my_inputs.begin(); it!=my_inputs.end(); it++){
       tab[it->first] = it->second->my_result;
@@ -35,7 +35,7 @@ void Node::computeOutput(){
   }
 
   //NOT Gate
-  if(my_type == "NOT"){
+  else if(my_type == "NOT"){
     // std::cout << "Computing NOT..." << '\n';
     for(it=my_inputs.begin(); it!=my_inputs.end(); it++){
       tab[it->first] = it->second->my_result;
@@ -46,7 +46,7 @@ void Node::computeOutput(){
   }
 
   //XOR_2 Gate
-  if(my_type == "XOR_2"){
+  else if(my_type == "XOR_2"){
     // std::cout << "Computing XOR_2..." << '\n';
     for(it=my_inputs.begin(); it!=my_inputs.end(); it++){
       tab[it->first] = it->second->my_result;
@@ -57,7 +57,7 @@ void Node::computeOutput(){
   }
 
   //MUX_2 Gate
-  if(my_type == "MUX_2"){
+  else if(my_type == "MUX_2"){
     // std::cout << "Computing MUX_2..." << '\n';
     bool tab1[3];
     for(it=my_inputs.begin(); it!=my_inputs.end(); it++){
@@ -72,6 +72,19 @@ void Node::computeOutput(){
       this->my_delta = 1;
     }
     // std::cout << "Compute MUX_2 ended"<< '\n';
+  }
+
+  else if(my_type == "INPUT"){
+
+  }
+
+  else if(my_type == "OUTPUT"){
+
+  }
+
+  else{
+    cout << "Error : the type " << this->my_type << " of the node " << this->my_name << " is not accepted" << endl;
+    exit(1);
   }
 
 /*

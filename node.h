@@ -12,13 +12,13 @@ class Node {
 private:
 
 //Declaration of the variables
-  int nb_inputs;
-  string my_name;
-  string my_type;
-  bool my_delta;
-  bool my_result;
-  map<int, Node*> my_inputs;
-  map<int, Node*> my_outputs;
+  int nb_inputs; //Number of inputs of a Node
+  string my_name; //Name of the Node
+  string my_type; //Type of the Node : AND, OR, XOR, ...
+  bool my_delta; //Delta of a Node
+  bool my_result; //Result of a Node
+  map<int, Node*> my_inputs; //Map which contains all the inputs of a Node
+  map<int, Node*> my_outputs; //Map which contains all the outputs of a Node
 
 public:
 
@@ -101,11 +101,11 @@ public:
    //Display a Node : name, type, number of inputs, and inputs (Node name, type, ...)
    void displayNode(){
      map<int, Node*>::iterator it;
-     std::cout << "Ce noeud a pour nom :" <<my_name << ", pour type :" << my_type << " et un nombre d'entrées:"<<nb_inputs << ".Delta = "<< my_delta <<", result=" <<my_result << ". Voici ses inputs:"<<'\n';
+     std::cout << "This NODE name is :" <<my_name << ", its type is :" << my_type << " its OUPUT number is :"<<nb_inputs << ".Delta = "<< my_delta <<", result=" <<my_result << ". Node OUPUTS :"<<'\n';
 
      for (it= my_inputs.begin(); it != my_inputs.end(); it++){
        Node* tmp = it->second;
-       std::cout << "Noeud n°" << it->first <<"\n de nom:"<< tmp->getName() << "\n et de type:" <<tmp->getType()<< '\n';
+       std::cout << "NODE n°" << it->first <<"\n, name :"<< tmp->getName() << "\n, type :" <<tmp->getType()<< '\n';
      }
    }
 

@@ -42,7 +42,7 @@ void Circuit::parse(){
         if(found != string::npos){
            my_name = str.substr(7,found-7);
            // std::cout << "name: "<< my_name << '\n';
-        } else {std::cout << "ERREUR : Accolade manquante sur la première ligne" << '\n';}
+        } else {std::cout << "Error : missing accolade on the first line" << '\n';}
     }
 
     //Tests if current line has "label" and creates de nodes of the circuit
@@ -74,12 +74,12 @@ void Circuit::parse(){
      //Tests if current line has "->" and fills the inputs of the nodes
      if (str.find("->") != string::npos) {
      if(in_circuit_idx == 0 ){
-       std::cout << "Erreur : Aucune entrée n'est définie" << '\n';
+       std::cout << "Error : No input defined" << '\n';
        exit(1);
      }
 
      if(out_circuit_idx == 0){
-       std::cout << "Erreur : Aucune sortie n'est définie" << '\n';
+       std::cout << "Error : No ouput defined" << '\n';
        exit(1);
      }
       size_t found3 = str.find("->");
@@ -123,14 +123,14 @@ void Circuit::parse(){
         }
       }
       if (in_from_found == 0 && gate_from_found == 0) {
-        std::cout << "Erreur sur le nom de la connection de l'entrée :\"" << from_name<<"\"" << '\n';
+        std::cout << "Error on the name of the input connection :\"" << from_name<<"\"" << '\n';
         exit(1);
       } else {
          in_from_found =0;
          gate_from_found=0;
       }
       if (out_to_found == 0 && gate_to_found == 0){
-        std::cout << "Erreur sur le nom de la connection de la sortie :\"" << to_name<<"\"" <<'\n';
+        std::cout << "Error on the name of the output connection :\"" << to_name<<"\"" <<'\n';
         exit(1);
       } else {
         out_to_found = 0;
