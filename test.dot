@@ -1,15 +1,22 @@
 digraph G {
-  in1[label="INPUT"]
-  in2[label="INPUT"]
-  in3[label="INPUT"]
+  A[label="INPUT"]
+  B[label="INPUT"]
+  C[label="INPUT"]
   out1[label="OUTPUT"]
   and[label="AND_2"]
-  or[label="AND_2"]
+  or[label="OR_2"]
+  not1[label="NOT"]
+  not2[label="NOT"]
+  and3[label="AND_3"]
 
-  in1-> and
-  in2-> and
-  in3-> or
-  and-> or
-  or-> out1
-
+  A->and
+  A->or
+  B->and
+  B->or
+  C->and3
+  and->not1
+  or->not2
+  not1->and3
+  not2->and3
+  and3->out1
 }

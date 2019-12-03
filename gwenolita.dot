@@ -1,0 +1,78 @@
+digraph toto {
+rankdir=LR;
+splines=ortho;
+
+in1[label="INPUT"];
+in2[label="INPUT"];
+in3[label="INPUT"];
+in4[label="INPUT"];
+in5[label="INPUT"];
+in6[label="INPUT"];
+in7[label="INPUT"];
+in8[label="INPUT"];
+in9[label="INPUT"];
+
+
+d[label="XOR_2"];
+a[label="AND_2"];
+b[label="OR_3"];
+c[label="AND_2"];
+e[label = "XOR3_e"];
+f[label = "NOR3_f"];
+g[label = "AND4_g"];
+h[label = "AND2_h"];
+i[label = "XOR2_i"];
+j[label = "NOT_j"];
+k[label = "XOR2_k"];
+l[label = "AND2_l"];
+m[label = "OR2_m"];
+n[label = "OR2_n"];
+o[label = "AND2_o"];
+
+in1 -> a;
+in2 -> a;
+in3 -> e;
+in8 -> o;
+in9 -> o;
+a -> e;
+l -> e;
+o -> l;
+in7 -> g;
+in6 -> g;
+in5 -> g;
+in4 -> g;
+
+g -> i;
+in6 -> i;
+
+e -> m;
+in3 -> m;
+
+m -> k;
+c -> k;
+
+in2 -> c;
+j -> c;
+
+j -> l;
+
+i -> h;
+k -> h;
+
+a -> f;
+h-> f;
+in1 -> f;
+
+f -> b;
+h -> b;
+k -> b;
+
+m -> d;
+k ->d;
+
+d -> n;
+b -> n;
+
+in9 -> j;
+
+}

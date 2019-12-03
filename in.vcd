@@ -5,13 +5,14 @@ $comment
 $end
 $timescale 1 us $end
 $scope module libsigrok $end
-$var wire 1 ! in1 $end
-$var wire 1 " in2 $end
-$var wire 1 ' in3 $end
+$var wire 1 ! A $end
+$var wire 1 " B $end
+$var wire 1 ' C $end
 $upscope $end
 $enddefinitions $end
-#0 1! 0" 0'
-#45 0! 1'
+#0 0! 0" 0'
+#45 1'
 #50 1! 1" 1'
-#72 1! 1" 1'
+#72 1! 0" 1'
+#80 1! 0" 0'
 #102

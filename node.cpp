@@ -7,7 +7,7 @@
 using namespace std;
 
 //Function which allows the compute of a node
-//Max number of inputs : 9 !!
+//Max number of inputs : INFINITE !!
 
 void Node::computeOutput(){
 
@@ -16,24 +16,25 @@ void Node::computeOutput(){
   size_t found;
   bool result;
   int n; // number of inputs of a node
+  int i = 0;
   std::vector<bool> v; //new version : we use a vector instead of a tab to consider nodes with "infinite" inputs
 
-  str = this->my_type;
+  string str = this->my_type;
 
   //AND Gate
   if(str.find("AND") != string::npos){
     found = str.find("_");
     if(found != string::npos){
-       n = str.substr(found,found+1);
+       n = stoi(str.substr(found+1));
     }
     else{
-      std::cout << "Error : number of inputs not defined" << '\n';
+      std::cout << "Error AND: number of inputs not defined" << '\n';
     }
     // std::cout << "Computing AND..." << '\n';
     for(it=my_inputs.begin(); it!=my_inputs.end(); it++){
       v.push_back(it->second->my_result);
     }
-    for(i=0;i=n;i++){
+    for(i=0;i<n;i++){
       if(i==0){
         result = v[0];
       }
@@ -45,22 +46,45 @@ void Node::computeOutput(){
     this->my_delta = 1;
     // std::cout << "Compute AND ended"<< '\n';
   }
-
+  if(str.find("NAND") != string::npos){
+    found = str.find("_");
+    if(found != string::npos){
+       n = stoi(str.substr(found+1));
+    }
+    else{
+      std::cout << "Error AND: number of inputs not defined" << '\n';
+    }
+    // std::cout << "Computing AND..." << '\n';
+    for(it=my_inputs.begin(); it!=my_inputs.end(); it++){
+      v.push_back(it->second->my_result);
+    }
+    for(i=0;i<n;i++){
+      if(i==0){
+        result = v[0];
+      }
+      else{
+        result = v[i] && result;
+      }
+    }
+    this->my_result = !result;
+    this->my_delta = 1;
+    // std::cout << "Compute AND ended"<< '\n';
+  }
 
   //OR Gate
   else if(str.find("OR") != string::npos){
     found = str.find("_");
     if(found != string::npos){
-       n = str.substr(found,found+1);
+      n = stoi(str.substr(found+1));
     }
     else{
-      std::cout << "Error : number of inputs not defined" << '\n';
+      std::cout << "Error OR: number of inputs not defined" << '\n';
     }
     // std::cout << "Computing OR..." << '\n';
     for(it=my_inputs.begin(); it!=my_inputs.end(); it++){
       v.push_back(it->second->my_result);
     }
-    for(i=0;i=n;i++){
+    for(i=0;i<n;i++){
       if(i==0){
         result = v[0];
       }
@@ -76,39 +100,30 @@ void Node::computeOutput(){
 
   //NOT Gate
   else if(str.find("NOT") != string::npos){
-    found = str.find("_");
-    if(found != string::npos){
-       n = str.substr(found,found+1);
-    }
-    else{
-      std::cout << "Error : number of inputs not defined" << '\n';
-    }
-    // std::cout << "Computing NOT..." << '\n';
+        // std::cout << "Computing NOT..." << '\n';
     for(it=my_inputs.begin(); it!=my_inputs.end(); it++){
       v.push_back(it->second->my_result);
     }
-    for(i=0;i=n;i++){
-      result = !v[i];
-    }
+    result = !v[0];
     this->my_result = result;
     this->my_delta = 1;
     // std::cout << "Compute NOT ended"<< '\n';
   }
 
   //XOR_2 Gate
-  else if(tr.find("XOR") != string::npos){
+  else if(str.find("XOR") != string::npos){
     found = str.find("_");
     if(found != string::npos){
-       n = str.substr(found,found+1);
+      n = stoi(str.substr(found+1));
     }
     else{
-      std::cout << "Error : number of inputs not defined" << '\n';
+      std::cout << "Error XOR: number of inputs not defined" << '\n';
     }
     // std::cout << "Computing XOR..." << '\n';
     for(it=my_inputs.begin(); it!=my_inputs.end(); it++){
       v.push_back(it->second->my_result);
     }
-    for(i=0;i=n;i++){
+    for(i=0;i<n;i++){
       if(i==0){
         result = v[0];
       }
