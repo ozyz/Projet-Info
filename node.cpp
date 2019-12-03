@@ -47,35 +47,31 @@ void Node::computeOutput(){
     // std::cout << "Compute AND ended"<< '\n';
   }
 
-<<<<<<< HEAD
-=======
-
-  //NAND Gate
-  if(str.find("NAND") != string::npos){
-    found = str.find("_");
-    if(found != string::npos){
-       n = stoi(str.substr(found+1));
-    }
-    else{
-      std::cout << "Error NAND: number of inputs not defined" << '\n';
-    }
-    // std::cout << "Computing NAND..." << '\n';
-    for(it=my_inputs.begin(); it!=my_inputs.end(); it++){
-      v.push_back(it->second->my_result);
-    }
-    for(i=0;i<n;i++){
-      if(i==0){
-        result = v[0];
+    //NAND Gate
+    if(str.find("NAND") != string::npos){
+      found = str.find("_");
+      if(found != string::npos){
+         n = stoi(str.substr(found+1));
       }
       else{
-        result = v[i] && result;
+        std::cout << "Error NAND: number of inputs not defined" << '\n';
       }
+      // std::cout << "Computing AND..." << '\n';
+      for(it=my_inputs.begin(); it!=my_inputs.end(); it++){
+        v.push_back(it->second->my_result);
+      }
+      for(i=0;i<n;i++){
+        if(i==0){
+          result = v[0];
+        }
+        else{
+          result = v[i] && result;
+        }
+      }
+      this->my_result = !result;
+      this->my_delta = 1;
+      // std::cout << "Compute AND ended"<< '\n';
     }
-    this->my_result = !result;
-    this->my_delta = 1;
-    // std::cout << "Compute NAND ended"<< '\n';
-  }
->>>>>>> cacfc7380ba44f84c57fe5fc6bb5c35521d01c65
 
 
   //OR Gate
