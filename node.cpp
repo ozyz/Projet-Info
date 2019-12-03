@@ -47,6 +47,36 @@ void Node::computeOutput(){
     // std::cout << "Compute AND ended"<< '\n';
   }
 
+<<<<<<< HEAD
+=======
+
+  //NAND Gate
+  if(str.find("NAND") != string::npos){
+    found = str.find("_");
+    if(found != string::npos){
+       n = stoi(str.substr(found+1));
+    }
+    else{
+      std::cout << "Error NAND: number of inputs not defined" << '\n';
+    }
+    // std::cout << "Computing NAND..." << '\n';
+    for(it=my_inputs.begin(); it!=my_inputs.end(); it++){
+      v.push_back(it->second->my_result);
+    }
+    for(i=0;i<n;i++){
+      if(i==0){
+        result = v[0];
+      }
+      else{
+        result = v[i] && result;
+      }
+    }
+    this->my_result = !result;
+    this->my_delta = 1;
+    // std::cout << "Compute NAND ended"<< '\n';
+  }
+>>>>>>> cacfc7380ba44f84c57fe5fc6bb5c35521d01c65
+
 
   //OR Gate
   else if(str.find("OR") != string::npos){
@@ -75,6 +105,33 @@ void Node::computeOutput(){
   }
 
 
+  //NOR Gate
+  else if(str.find("NOR") != string::npos){
+    found = str.find("_");
+    if(found != string::npos){
+      n = stoi(str.substr(found+1));
+    }
+    else{
+      std::cout << "Error NOR: number of inputs not defined" << '\n';
+    }
+    // std::cout << "Computing NOR..." << '\n';
+    for(it=my_inputs.begin(); it!=my_inputs.end(); it++){
+      v.push_back(it->second->my_result);
+    }
+    for(i=0;i<n;i++){
+      if(i==0){
+        result = v[0];
+      }
+      else{
+        result = v[i] || result;
+      }
+    }
+    this->my_result = !result;
+    this->my_delta = 1;
+    // std::cout << "Compute NOR ended"<< '\n';
+  }
+
+
   //NOT Gate
   else if(str.find("NOT") != string::npos){
         // std::cout << "Computing NOT..." << '\n';
@@ -87,7 +144,7 @@ void Node::computeOutput(){
     // std::cout << "Compute NOT ended"<< '\n';
   }
 
-  //XOR_2 Gate
+  //XOR Gate
   else if(str.find("XOR") != string::npos){
     found = str.find("_");
     if(found != string::npos){
@@ -110,8 +167,36 @@ void Node::computeOutput(){
     }
     this->my_result = result;
     this->my_delta = 1;
-    // std::cout << "Compute XOR_2 ended"<< '\n';
+    // std::cout << "Compute XOR ended"<< '\n';
   }
+
+
+  //NXOR Gate
+  else if(str.find("NXOR") != string::npos){
+    found = str.find("_");
+    if(found != string::npos){
+      n = stoi(str.substr(found+1));
+    }
+    else{
+      std::cout << "Error NXOR: number of inputs not defined" << '\n';
+    }
+    // std::cout << "Computing NXOR..." << '\n';
+    for(it=my_inputs.begin(); it!=my_inputs.end(); it++){
+      v.push_back(it->second->my_result);
+    }
+    for(i=0;i<n;i++){
+      if(i==0){
+        result = v[0];
+      }
+      else{
+        result = v[i] ^ result;
+      }
+    }
+    this->my_result = !result;
+    this->my_delta = 1;
+    // std::cout << "Compute NXOR ended"<< '\n';
+  }
+
 
   //MUX_2 Gate
   else if(my_type == "MUX_2"){
@@ -141,16 +226,6 @@ void Node::computeOutput(){
     cout << "Error : the type " << this->my_type << " of the node " << this->my_name << " is not accepted" << endl;
     exit(1);
   }
-
-/*
-  //D gate
-  Node<bool> clock; //définition de l'horloge
-  Node<bool> signal_input; //définition du signal d'entrée
-  Node<bool> signal_output; //définition du signal de sortie
-
-*/
-
-
 }
 
 
