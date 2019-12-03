@@ -1,5 +1,7 @@
 digraph G {
-
+  in1[label="INPUT"]
+  in2[label="INPUT"]
+  in3[label="INPUT"]
   out1[label="OUTPUT"]
   and[label="AND_2"]
   or[label="OR_2"]

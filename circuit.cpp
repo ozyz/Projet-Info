@@ -195,7 +195,8 @@ bool Circuit::checkSumDelta(){
   return 1;
 }
 
-bool Circuit::evaluate(){
+map<string,bool>  Circuit::evaluate(){
+  map<string,bool> results;
   map<int, Node*>::iterator it;
   while (checkSumDelta() == false){
     for (it= my_circuitGates.begin(); it != my_circuitGates.end(); it++){
@@ -214,6 +215,7 @@ bool Circuit::evaluate(){
   for (it= my_circuitOutputs.begin(); it != my_circuitOutputs.end(); it++){
 
     // std::cout << "Resultat:" << it->second->getResult()<< '\n';
-    return it->second->getResult();
+    results.insert(make_pair(it->second->getName(),it->second->getResult()));
   }
+  return results;
 }

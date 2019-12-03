@@ -5,6 +5,7 @@
 #include <string>
 #include <iostream>
 #include <map>
+#include <vector>
 #include "node.h"
 
 using namespace std;
@@ -35,10 +36,26 @@ public:
       it->second->displayNode();
     }
   }
+  vector<string> getInputNames(){
+    vector<string> names;
+    map<int, Node*>::iterator it;
+    for (it= my_circuitInputs.begin(); it != my_circuitInputs.end(); it++){
+      names.push_back(it->second->getName());
+    }
+    return names;
+  }
+  vector<string> getOutputNames(){
+    vector<string> names;
+    map<int, Node*>::iterator it;
+    for (it= my_circuitOutputs.begin(); it != my_circuitOutputs.end(); it++){
+      names.push_back(it->second->getName());
+    }
+    return names;
+  }
   void parse();          //Parses the dot file and creates the circuit inputs, outputs and gates with the link between them.
   void setInputValues(map<string, bool> inputs); //Sets the values of the circuit inputs
   bool checkSumDelta();  //Checks the delta of all the circuit nodes.
-  bool evaluate();       //Runs the simulation of the circuit for 1 clock tick, based on the inputs, sets the outputs.
+  map<string,bool> evaluate();       //Runs the simulation of the circuit for 1 clock tick, based on the inputs, sets the outputs.
   void reset();          //resets the circuit (sets all the nodes deltas to 0)
 };
 

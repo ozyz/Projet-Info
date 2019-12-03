@@ -121,55 +121,51 @@ map<int, map<string, bool>> vcdParser(string vcdFile)
 int main(int argc, char const *argv[]) {
 
   map<int, map<string, bool>> inputs = vcdParser("in.vcd");
-  map<int, map<string, bool>>::iterator it_timings;
-  map<string, bool>::iterator it_inputs;
-  ostringstream line_time, line_result;
+  map<int, map<string, bool>>::iterator it_inputs;
+  vector<int> timings;
+  vector<int>::iterator it_timings;
+  map<int, map<string, bool>> results;
+  map<int, map<string, bool>>::iterator it_results;
+  map<string, bool>::iterator it_name_value;
+
+  vector<string> input_names;
+  vector<string> output_names;
+  vector<string>::iterator it_v;
+
 
   Circuit a("yo", "test.dot");
   a.parse();
-  // a.displayCircuit();
-  std::cout << "Starting simulation...\n" << '\n';
-  line_time << "\nTime:   ";
-  line_result << "Results:";
+  input_names = a.getInputNames();
+  output_names = a.getOutputNames();
 
-  for (it_timings = inputs.begin(); it_timings != inputs.end(); it_timings++) {
-      line_time << std::setw(6) << it_timings->first;
-      a.setInputValues(it_timings->second);
-      line_result << std::setw(6) << a.evaluate();
+  //Remplissage du veccteur de timings
+  for (it_inputs = inputs.begin(); it_inputs != inputs.end(); it_inputs++) {
+      timings.push_back(it_inputs->first);
+  }
+  //Evaluation
+  for (it_inputs = inputs.begin(); it_inputs != inputs.end(); it_inputs++) {
+      a.setInputValues(it_inputs->second);
+      results.insert(make_pair(it_inputs->first,a.evaluate()));
       a.reset();
   }
-  std::cout << line_time.str() << '\n';
-  std::cout << line_result.str() << '\n';
+
+  //Result printing
+  for (it_timings = timings.begin(); it_timings != timings.end(); it_timings++) {
+      std::cout << "\nTime :" << *it_timings << '\n';
+      for(it_inputs = inputs.begin(); it_inputs != inputs.end();it_inputs++){
+          if(it_inputs->first == *it_timings){
+              for(it_name_value = it_inputs->second.begin(); it_name_value != it_inputs->second.end();it_name_value++){
+                  std::cout << "Value of " << it_name_value->first << ":" << it_name_value->second << '\n';
+              }
+          }
+      }
+      for(it_results = results.begin(); it_results != results.end();it_results++){
+          if(it_results->first == *it_timings){
+              for(it_name_value = it_results->second.begin(); it_name_value != it_results->second.end();it_name_value++){
+                  std::cout << "\nValue of " << it_name_value->first << ":" << it_name_value->second << '\n';
+              }
+          }
+      }
+  }
   return 0;
 }
-
-// map<int, map<int, bool>> inParser(string inFile, int* simulationTime, Circuit a){
-//   ifstream fichier(inFile.c_str());
-//
-//   int in_circuit_idx = 0;
-//   string str;
-//   size_t found;
-//
-//   while (getline(fichier, str)) {
-//     str.erase(remove(str.begin(), str.end(), ' '), str.end());
-//
-//     if(str.find("$") != string::npos){
-//       found = str.find("$");
-//       *simulationTime = stoi(str.substr(1));
-//     }
-//     if(str.find("#") != string::npos){
-//         found = str.find("#");
-//
-//     }
-//
-//   }
-// }
-/*!
-@file
-@brief Definition of the VCDFileParser class
-*/
-
-
-/*!
-@brief Standalone test function to allow testing of the VCD file parser.
-*/
