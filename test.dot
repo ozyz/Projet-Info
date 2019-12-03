@@ -1,14 +1,10 @@
 digraph G {
-<<<<<<< HEAD
-=======
-
->>>>>>> 905a9906f9f30a8b777c4270606d7547bdd78f4b
   in1[label="INPUT"]
   in2[label="INPUT"]
   in3[label="INPUT"]
   out1[label="OUTPUT"]
-  and[label="kkjkegjkejg"]
-  or[label="OR_2"]
+  and[label="AND_2"]
+  or[label="AND_2"]
 
   in1-> and
   in2-> and
