@@ -30,7 +30,7 @@ static char VCDBit2Char(VCDBit b) {
 map<int, map<string, bool>> vcdParser(string vcdFile)
 {
 
-    std::string infile("in.vcd");
+    std::string infile(vcdFile);
     map<int, map<string, bool>> timing_inputs_map;
     map<string, bool> inputs_map;
     const string ref;
@@ -118,87 +118,104 @@ map<int, map<string, bool>> vcdParser(string vcdFile)
     }
 }
 
+void displayResults(Circuit c,map<int, map<string, bool>> inputs,map<int, map<string, bool>> results){
+    vector<string> input_names = c.getInputNames();
+    vector<string> output_names = c.getOutputNames();
+    map<int, map<string, bool>>::iterator it_inputs;
+    map<int, map<string, bool>>::iterator it_results;
+    map<string, bool>::iterator it_name_value;
+    int inputs_length = input_names.size();
+    int outputs_length = input_names.size();
+    ostringstream line_results[outputs_length];
+    ostringstream line_inputs[inputs_length];
+    ostringstream line_time;
+    line_time <<"Time : ";
+    vector<string>::iterator it_v;
+    int idx;
+    int diff =0;
+    int period = c.getPeriod();
+    //Input display
+    for (it_v = input_names.begin(); it_v != input_names.end(); it_v++) {
+        idx= distance(input_names.begin(), it_v);
+        diff = 7- it_v->length();
+        line_inputs[idx] << *it_v <<std::setw(diff) <<":";
+    }
+    //Output display
+    for (it_v = output_names.begin(); it_v != output_names.end(); it_v++) {
+        idx= distance(output_names.begin(), it_v);
+        diff = 7- it_v->length();
+        line_results[idx]<<*it_v<<std::setw(diff) <<":";
+    }
+
+    //Result printing
+    for (int i = 0; i < inputs.rbegin()->first; i++) {
+        if (i%period == 0){
+            line_time<< std::setw(6)<<i;
+            for(it_inputs = inputs.begin(); it_inputs != inputs.end();it_inputs++){
+                if(it_inputs->first == i){
+                    for(it_name_value = it_inputs->second.begin(); it_name_value != it_inputs->second.end();it_name_value++){
+                        idx= distance(it_inputs->second.begin(), it_name_value);
+                        line_inputs[idx]<< std::setw(6)<<it_name_value->second;
+                    }
+                }
+            }
+            for(it_results = results.begin(); it_results != results.end();it_results++){
+                if(it_results->first == i){
+                    for(it_name_value = it_results->second.begin(); it_name_value != it_results->second.end();it_name_value++){
+                        idx= distance(it_results->second.begin(), it_name_value);
+                        line_results[idx]<< std::setw(6)<<it_name_value->second;
+                    }
+                }
+            }
+        }
+   }
+    cout << line_time.str() << '\n';
+    for (int i = 0; i<inputs_length; i++) {
+        cout <<line_inputs[i].str()<<'\n';
+    }
+    for (int i = 0; i<outputs_length; i++) {
+        cout <<line_results[i].str()<<'\n';
+    }
+}
+
 int main(int argc, char const *argv[]) {
   string dotFile = argv[1];
   string vcdFile = argv[2];
+  int period = stoi(argv[3]);
   map<int, map<string, bool>> inputs = vcdParser(vcdFile);
   map<int, map<string, bool>>::iterator it_inputs;
-  vector<int> timings;
-  vector<int>::iterator it_timings;
+  map<string, bool> tmp;
   map<int, map<string, bool>> results;
-  map<int, map<string, bool>>::iterator it_results;
   map<string, bool>::iterator it_name_value;
 
-  vector<string> input_names;
-  vector<string> output_names;
-  vector<string>::iterator it_v;
-  int idx;
-  int diff =0;
-  ostringstream line_time;
-  line_time <<"Time : ";
-
-
-  Circuit a("yo", dotFile);
+  Circuit a("yo", dotFile, period);
 
   a.parse();
-  input_names = a.getInputNames();
-  output_names = a.getOutputNames();
-  int inputs_length = input_names.size();
-  int outputs_length = input_names.size();
-  ostringstream line_results[outputs_length];
-  ostringstream line_inputs[inputs_length];
 
-  //Affichage des entrées
-  for (it_v = input_names.begin(); it_v != input_names.end(); it_v++) {
-      idx= distance(input_names.begin(), it_v);
-      diff = 7- it_v->length();
-      line_inputs[idx] << *it_v <<std::setw(diff) <<":";
-  }
-  //Affichage des sorties
-  for (it_v = output_names.begin(); it_v != output_names.end(); it_v++) {
-      idx= distance(output_names.begin(), it_v);
-      diff = 7- it_v->length();
-      line_results[idx]<<*it_v<<std::setw(diff) <<":";
-  }
-
-  //Remplissage du vecteur de timings
   for (it_inputs = inputs.begin(); it_inputs != inputs.end(); it_inputs++) {
-      timings.push_back(it_inputs->first);
-      line_time<< std::setw(6)<<it_inputs->first;
+    std::cout << it_inputs->first << '\n';
+    for (it_name_value = it_inputs->second.begin(); it_name_value!=it_inputs->second.end(); it_name_value++) {
+        std::cout<<it_name_value->first<<":" << it_name_value->second << '\n';
+    }
   }
-
   //Evaluation
-  for (it_inputs = inputs.begin(); it_inputs != inputs.end(); it_inputs++) {
-      a.setInputValues(it_inputs->second);
-      results.insert(make_pair(it_inputs->first,a.evaluate()));
-      a.reset();
-  }
-  
-  //Result printing
-  for (it_timings = timings.begin(); it_timings != timings.end(); it_timings++) {
-      for(it_inputs = inputs.begin(); it_inputs != inputs.end();it_inputs++){
-          if(it_inputs->first == *it_timings){
-              for(it_name_value = it_inputs->second.begin(); it_name_value != it_inputs->second.end();it_name_value++){
-                  idx= distance(it_inputs->second.begin(), it_name_value);
-                  line_inputs[idx]<< std::setw(6)<<it_name_value->second;
-              }
+  for (int i = 0; i < inputs.rbegin()->first; i++) {
+      for (it_inputs = inputs.begin(); it_inputs != inputs.end(); it_inputs++) {
+          if (it_inputs->first == i) {
+              a.setInputValues(it_inputs->second);
+              std::cout << "setInput at i = " << i<< '\n';
+              tmp = it_inputs->second;
+              inputs.erase(it_inputs->first);
           }
       }
-      for(it_results = results.begin(); it_results != results.end();it_results++){
-          if(it_results->first == *it_timings){
-              for(it_name_value = it_results->second.begin(); it_name_value != it_results->second.end();it_name_value++){
-                  idx= distance(it_results->second.begin(), it_name_value);
-                  line_results[idx]<< std::setw(6)<<it_name_value->second;
-              }
-          }
+      if(i%period ==0){
+          // a.displayCircuit();
+          results.insert(make_pair(i,a.evaluate(i)));
+          inputs.insert(make_pair(i, tmp));
+          a.reset();
       }
   }
-  cout << line_time.str() << '\n';
-  for (int i = 0; i<inputs_length; i++) {
-      cout <<line_inputs[i].str()<<'\n';
-  }
-  for (int i = 0; i<outputs_length; i++) {
-      cout <<line_results[i].str()<<'\n';
-  }
+  displayResults(a, inputs,results);
+
   return 0;
 }

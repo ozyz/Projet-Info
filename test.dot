@@ -9,14 +9,9 @@ digraph G {
   not2[label="NOT"]
   and3[label="AND_3"]
 
-  A->and
+  A->and->not1->and3->out1
   A->or
   B->and
-  B->or
+  B->or->not2->and3
   C->and3
-  and->not1
-  or->not2
-  not1->and3
-  not2->and3
-  and3->out1
 }

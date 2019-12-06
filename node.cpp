@@ -9,7 +9,7 @@ using namespace std;
 //Function which allows the compute of a node
 //Max number of inputs : INFINITE !!
 
-void Node::computeOutput(){
+void Node::computeOutput(int period, int time){
 
   map<int, Node*>::iterator it;
   bool tab[2]; // we use this tab just for the MUX
@@ -212,6 +212,21 @@ void Node::computeOutput(){
     // std::cout << "Compute MUX_2 ended"<< '\n';
   }
 
+  else if(my_type == "DFF"){
+     std::cout << "Computing DFF..." << '\n';
+    if (time%period == 0) {
+      cin.ignore();
+      std::cout << "UpFront :" <<time <<" memory :" << my_memory <<" period :"<<period<<" input result :"<<my_inputs[0]->getResult()<<" input name: "<< my_inputs[0]->getName()<<'\n';
+      this->my_result = my_inputs[0]->my_result;
+    }
+    // } else {
+    //   my_memory = my_inputs[0]->my_result;
+    //   cin.ignore();
+    //   std::cout << "Not UpFront :" <<time << my_memory << '\n';
+    // }
+    this->my_delta = 1;
+     std::cout << "Compute DFF ended"<< '\n';
+  }
   else if(my_type == "INPUT"){
   }
 

@@ -10,7 +10,7 @@
 
 using namespace std;
 
-Circuit::Circuit(const string & nom, const string & dotFile): my_name(nom), my_dotFile(dotFile){
+Circuit::Circuit(const string & nom, const string & dotFile, const int & period): my_name(nom), my_dotFile(dotFile), my_period(period){
 
 }
 
@@ -82,60 +82,69 @@ void Circuit::parse(){
        std::cout << "Error : No ouput defined" << '\n';
        exit(1);
      }
-      size_t found3 = str.find("->");
-      string from_name = str.substr(0,found3);
-      string to_name = str.substr(found3+2);
+      size_t found3;
+      size_t found4;
+      string from_name;
+      string to_name;
+      while (str.find("->") != string::npos) {
+        found3 = str.find("->");
+        found4 = str.find("->", found3+1);
+        from_name = str.substr(0,found3);
+        to_name = str.substr(found3+2, found4-found3-2);
 
-      map<int, Node*>::iterator it1;
-      map<int, Node*>::iterator it2;
-      for (it1 = my_circuitInputs.begin(); it1 != my_circuitInputs.end(); it1++) {
-        if(it1->second->getName() == from_name){
-          in_from_found = 1;
-          for (it2 = my_circuitGates.begin(); it2 != my_circuitGates.end(); it2++) {
-             if(it2->second->getName() == to_name){
-               it2->second->addInput(it1->second);
-               gate_to_found = 1;
-             }
-          }
-        }
-      }
-      for (it1 = my_circuitGates.begin(); it1 != my_circuitGates.end(); it1++) {
-        if(it1->second->getName() == from_name){
-          gate_from_found = 1;
-          for (it2 = my_circuitGates.begin(); it2 != my_circuitGates.end(); it2++) {
-            if(it2->second->getName() == to_name){
-              gate_to_found = 1;
-               it2->second->addInput(it1->second);
-
+        str = str.substr(found3+2);
+        map<int, Node*>::iterator it1;
+        map<int, Node*>::iterator it2;
+        for (it1 = my_circuitInputs.begin(); it1 != my_circuitInputs.end(); it1++) {
+          if(it1->second->getName() == from_name){
+            in_from_found = 1;
+            for (it2 = my_circuitGates.begin(); it2 != my_circuitGates.end(); it2++) {
+               if(it2->second->getName() == to_name){
+                 it2->second->addInput(it1->second);
+                 gate_to_found = 1;
+               }
             }
           }
         }
-      }
-      for (it1 = my_circuitOutputs.begin(); it1 != my_circuitOutputs.end(); it1++) {
-        if(it1->second->getName() == to_name){
-          out_to_found = 1;
-          for (it2 = my_circuitGates.begin(); it2 != my_circuitGates.end(); it2++) {
-            if(it2->second->getName() == from_name){
-              gate_from_found = 1;
-               it1->second->addInput(it2->second);
+        for (it1 = my_circuitGates.begin(); it1 != my_circuitGates.end(); it1++) {
+          if(it1->second->getName() == from_name){
+            gate_from_found = 1;
+            for (it2 = my_circuitGates.begin(); it2 != my_circuitGates.end(); it2++) {
+              if(it2->second->getName() == to_name){
+                gate_to_found = 1;
+                 it2->second->addInput(it1->second);
+
+              }
             }
           }
         }
+        for (it1 = my_circuitOutputs.begin(); it1 != my_circuitOutputs.end(); it1++) {
+          if(it1->second->getName() == to_name){
+            out_to_found = 1;
+            for (it2 = my_circuitGates.begin(); it2 != my_circuitGates.end(); it2++) {
+              if(it2->second->getName() == from_name){
+                gate_from_found = 1;
+                 it1->second->addInput(it2->second);
+              }
+            }
+          }
+        }
+        if (in_from_found == 0 && gate_from_found == 0) {
+          std::cout << "Error on the name of the input connection :\"" << from_name<<"\"" << '\n';
+          exit(1);
+        } else {
+           in_from_found =0;
+           gate_from_found=0;
+        }
+        if (out_to_found == 0 && gate_to_found == 0){
+          std::cout << "Error on the name of the output connection :\"" << to_name<<"\"" <<'\n';
+          exit(1);
+        } else {
+          out_to_found = 0;
+          gate_to_found = 0;
+        }
       }
-      if (in_from_found == 0 && gate_from_found == 0) {
-        std::cout << "Error on the name of the input connection :\"" << from_name<<"\"" << '\n';
-        exit(1);
-      } else {
-         in_from_found =0;
-         gate_from_found=0;
-      }
-      if (out_to_found == 0 && gate_to_found == 0){
-        std::cout << "Error on the name of the output connection :\"" << to_name<<"\"" <<'\n';
-        exit(1);
-      } else {
-        out_to_found = 0;
-        gate_to_found = 0;
-      }
+
        // std::cout << from_name << "" << to_name << '\n';
      }
     // cout << str <<'\n';
@@ -150,7 +159,7 @@ void Circuit::setInputValues(map<string, bool> inputs){
     for (it_nodes= my_circuitInputs.begin(); it_nodes != my_circuitInputs.end(); it_nodes++){
       if(it_inputs->first == it_nodes->second->getName()){
         it_nodes->second->setResult(it_inputs->second);
-        // std::cout << "Input : " <<   it_nodes->second->getName() << " = " << it_nodes->second->getResult()<<'\n';
+         std::cout << "Input : " <<   it_nodes->second->getName() << " = " << it_nodes->second->getResult()<<'\n';
         it_nodes->second->setDelta(1);
       }
     }
@@ -162,21 +171,19 @@ void Circuit::setInputValues(map<string, bool> inputs){
 void Circuit::reset(){
   map<int, Node*>::iterator it;
   for (it= my_circuitInputs.begin(); it != my_circuitInputs.end(); it++){
-    it->second->setDelta(0);
-    it->second->setResult(0);
+    // it->second->setDelta(0);
   }
   for (it= my_circuitGates.begin(); it != my_circuitGates.end(); it++){
     it->second->setDelta(0);
-    it->second->setResult(0);
   }
   for (it= my_circuitOutputs.begin(); it != my_circuitOutputs.end(); it++){
     it->second->setDelta(0);
-    it->second->setResult(0);
   }
 }
 
 bool Circuit::checkSumDelta(){
   map<int, Node*>::iterator it;
+  // cin.ignore();
   for (it= my_circuitInputs.begin(); it != my_circuitInputs.end(); it++){
     if (it->second->getDelta()==0){
       return 0;
@@ -195,14 +202,14 @@ bool Circuit::checkSumDelta(){
   return 1;
 }
 
-map<string,bool>  Circuit::evaluate(){
+map<string,bool>  Circuit::evaluate(int time){
   map<string,bool> results;
   map<int, Node*>::iterator it;
   while (checkSumDelta() == false){
     for (it= my_circuitGates.begin(); it != my_circuitGates.end(); it++){
       if (it->second->checkInputDelta()){
         // std::cout << "entering compute" << '\n';
-        it->second->computeOutput();
+        it->second->computeOutput(my_period, time);
       }
     }
     for (it= my_circuitOutputs.begin(); it != my_circuitOutputs.end(); it++){

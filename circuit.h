@@ -8,17 +8,19 @@
 #include <vector>
 #include "node.h"
 
+
 using namespace std;
 
 class Circuit{
 private:
   string my_name;    //Circuit name
   string my_dotFile; //Dotfile path
+  int my_period;
   map<int, Node*> my_circuitInputs;  //Map of the circuit inputs
   map<int, Node*> my_circuitOutputs; //Map of the circuit outputs
   map<int, Node*> my_circuitGates;   //Map of the circuit gates
 public:
-  Circuit(const string & nom, const string & dotFile);  //Constructor
+  Circuit(const string & nom, const string & dotFile, const int & period);  //Constructor
   ~Circuit(){;}
                                        //Destructor
   void displayCircuit(){
@@ -44,6 +46,9 @@ public:
     }
     return names;
   }
+  int getPeriod(){
+    return my_period;
+  }
   vector<string> getOutputNames(){
     vector<string> names;
     map<int, Node*>::iterator it;
@@ -55,7 +60,7 @@ public:
   void parse();          //Parses the dot file and creates the circuit inputs, outputs and gates with the link between them.
   void setInputValues(map<string, bool> inputs); //Sets the values of the circuit inputs
   bool checkSumDelta();  //Checks the delta of all the circuit nodes.
-  map<string,bool> evaluate();       //Runs the simulation of the circuit for 1 clock tick, based on the inputs, sets the outputs.
+  map<string,bool> evaluate(int time);       //Runs the simulation of the circuit for 1 clock tick, based on the inputs, sets the outputs.
   void reset();          //resets the circuit (sets all the nodes deltas to 0)
 };
 

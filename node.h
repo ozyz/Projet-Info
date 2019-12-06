@@ -17,6 +17,7 @@ private:
   string my_type; //Type of the Node : AND, OR, XOR, ...
   bool my_delta; //Delta of a Node
   bool my_result; //Result of a Node
+  bool my_memory = 0;
   map<int, Node*> my_inputs; //Map which contains all the inputs of a Node
   map<int, Node*> my_outputs; //Map which contains all the outputs of a Node
 
@@ -101,7 +102,7 @@ public:
    //Display a Node : name, type, number of inputs, and inputs (Node name, type, ...)
    void displayNode(){
      map<int, Node*>::iterator it;
-     std::cout << "This NODE name is :" <<my_name << ", its type is :" << my_type << " its OUPUT number is :"<<nb_inputs << ".Delta = "<< my_delta <<", result=" <<my_result << ". Node OUPUTS :"<<'\n';
+     std::cout << "This NODE name is :" <<my_name << ", its type is :" << my_type << " its INPUT number is :"<<nb_inputs << ".Delta = "<< my_delta <<", result=" <<my_result << ". Node INPUTS :"<<'\n';
 
      for (it= my_inputs.begin(); it != my_inputs.end(); it++){
        Node* tmp = it->second;
@@ -111,7 +112,7 @@ public:
 
 
 //Methods
-  void computeOutput();
+  void computeOutput(int period, int time);
   bool checkInputDelta();
 
 

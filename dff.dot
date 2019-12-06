@@ -1,0 +1,7 @@
+digraph G {
+  A[label="INPUT"]
+  out1[label="OUTPUT"]
+  dff[label="DFF"]
+  A->dff
+  dff->out1
+}
