@@ -159,7 +159,6 @@ void Circuit::setInputValues(map<string, bool> inputs){
     for (it_nodes= my_circuitInputs.begin(); it_nodes != my_circuitInputs.end(); it_nodes++){
       if(it_inputs->first == it_nodes->second->getName()){
         it_nodes->second->setResult(it_inputs->second);
-         std::cout << "Input : " <<   it_nodes->second->getName() << " = " << it_nodes->second->getResult()<<'\n';
         it_nodes->second->setDelta(1);
       }
     }
@@ -205,18 +204,32 @@ bool Circuit::checkSumDelta(){
 map<string,bool>  Circuit::evaluate(int time){
   map<string,bool> results;
   map<int, Node*>::iterator it;
+  int number_of_gates=this->getNumberOfGates();
+  int cnt;
   while (checkSumDelta() == false){
+    cnt = 0;
     for (it= my_circuitGates.begin(); it != my_circuitGates.end(); it++){
       if (it->second->checkInputDelta()){
         // std::cout << "entering compute" << '\n';
         it->second->computeOutput(my_period, time);
+        number_of_gates --;
+      } else {
+        cnt ++;
       }
     }
     for (it= my_circuitOutputs.begin(); it != my_circuitOutputs.end(); it++){
       if (it->second->checkInputDelta()){
         it->second->setResult(it->second->getFirstInputResult());
         it->second->setDelta(1);
+        number_of_gates --;
+      } else {
+        cnt ++;
       }
+    }
+    if (cnt > number_of_gates){
+      std::cout << cnt <<":"<< number_of_gates << '\n';
+      std::cout << "Error : combinational loop" <<'\n';
+      exit(1);
     }
   }
   for (it= my_circuitOutputs.begin(); it != my_circuitOutputs.end(); it++){

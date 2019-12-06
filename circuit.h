@@ -33,7 +33,7 @@ public:
     for (it= my_circuitGates.begin(); it != my_circuitGates.end(); it++){
       it->second->displayNode();
     }
-    std::cout << "\nIts OUTPUTS are :"<<'\n';
+     std::cout << "\nIts OUTPUTS are :"<<'\n';
     for (it= my_circuitOutputs.begin(); it != my_circuitOutputs.end(); it++){
       it->second->displayNode();
     }
@@ -56,6 +56,17 @@ public:
       names.push_back(it->second->getName());
     }
     return names;
+  }
+  int getNumberOfGates(){
+    int cnt;
+    map<int, Node*>::iterator it;
+    for (it= my_circuitGates.begin(); it != my_circuitGates.end(); it++){
+      cnt++;
+    }
+    for (it= my_circuitOutputs.begin(); it != my_circuitOutputs.end(); it++){
+      cnt++;
+    }
+    return cnt;
   }
   void parse();          //Parses the dot file and creates the circuit inputs, outputs and gates with the link between them.
   void setInputValues(map<string, bool> inputs); //Sets the values of the circuit inputs
