@@ -21,8 +21,9 @@ private:
   map<int, Node*> my_circuitGates;   //Map of the circuit gates
 public:
   Circuit(const string & nom, const string & dotFile, const int & period);  //Constructor
-  ~Circuit(){;}
-                                       //Destructor
+  ~Circuit(){;} //Destructor
+
+
   void displayCircuit(){
     map<int, Node*>::iterator it;
     std::cout << "The circuit name is :" <<my_name <<". Its INPUTS are :"<<'\n';
@@ -38,6 +39,7 @@ public:
       it->second->displayNode();
     }
   }
+
   vector<string> getInputNames(){
     vector<string> names;
     map<int, Node*>::iterator it;
@@ -46,9 +48,11 @@ public:
     }
     return names;
   }
+
   int getPeriod(){
     return my_period;
   }
+
   vector<string> getOutputNames(){
     vector<string> names;
     map<int, Node*>::iterator it;
@@ -57,6 +61,8 @@ public:
     }
     return names;
   }
+
+  
   void parse();          //Parses the dot file and creates the circuit inputs, outputs and gates with the link between them.
   void setInputValues(map<string, bool> inputs); //Sets the values of the circuit inputs
   bool checkSumDelta();  //Checks the delta of all the circuit nodes.
