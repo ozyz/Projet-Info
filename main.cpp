@@ -203,13 +203,11 @@ int main(int argc, char const *argv[]) {
       for (it_inputs = inputs.begin(); it_inputs != inputs.end(); it_inputs++) {
           if (it_inputs->first == i) {
               a.setInputValues(it_inputs->second);
-              std::cout << "setInput at i = " << i<< '\n';
               tmp = it_inputs->second;
               inputs.erase(it_inputs->first);
           }
       }
       if(i%period ==0){
-          // a.displayCircuit();
           results.insert(make_pair(i,a.evaluate(i)));
           inputs.insert(make_pair(i, tmp));
           a.reset();

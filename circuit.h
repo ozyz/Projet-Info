@@ -34,7 +34,7 @@ public:
     for (it= my_circuitGates.begin(); it != my_circuitGates.end(); it++){
       it->second->displayNode();
     }
-    std::cout << "\nIts OUTPUTS are :"<<'\n';
+     std::cout << "\nIts OUTPUTS are :"<<'\n';
     for (it= my_circuitOutputs.begin(); it != my_circuitOutputs.end(); it++){
       it->second->displayNode();
     }
@@ -61,8 +61,22 @@ public:
     }
     return names;
   }
+<<<<<<< HEAD
 
   
+=======
+  int getNumberOfGates(){
+    int cnt;
+    map<int, Node*>::iterator it;
+    for (it= my_circuitGates.begin(); it != my_circuitGates.end(); it++){
+      cnt++;
+    }
+    for (it= my_circuitOutputs.begin(); it != my_circuitOutputs.end(); it++){
+      cnt++;
+    }
+    return cnt;
+  }
+>>>>>>> e60529594e7ada476d229d16fadc99947a253160
   void parse();          //Parses the dot file and creates the circuit inputs, outputs and gates with the link between them.
   void setInputValues(map<string, bool> inputs); //Sets the values of the circuit inputs
   bool checkSumDelta();  //Checks the delta of all the circuit nodes.
